@@ -1,0 +1,24 @@
+<div class="content-container">
+    <mat-card class="delete-card" [class.busy]="loading">
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+        <mat-card-title>Account wirklich löschen?</mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <form [formGroup]="deleteFormGroup" id="delete-form" (ngSubmit)="onSubmit()">
+                <p>
+                    <mat-icon class="delete-icon">lock</mat-icon>
+                    <mat-form-field>
+                        <input [type]="hide ? 'password' : 'text'" id="password" name="password" required matInput placeholder="Passwort" formControlName="pwdCtrl">
+                        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                        <mat-error *ngIf="pwdCtrl.errors?.required">
+                            Dieses Feld ist ein
+                            <strong>Pflichtfeld</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <br>
+                <button mat-raised-button [disabled]="loading" color="accent" id="delete-btn">Account löschen</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

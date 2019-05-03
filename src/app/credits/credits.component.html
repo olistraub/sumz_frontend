@@ -1,0 +1,19 @@
+<div class="content-container">
+  <h1>Open-Source-Komponenten</h1>
+  <mat-accordion multi="true">
+    <mat-expansion-panel *ngFor="let dependency of dependencies">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{dependency.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{dependency.license}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+        {{dependency.licenseText$ | async}}
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

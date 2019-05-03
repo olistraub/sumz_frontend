@@ -1,0 +1,28 @@
+app-scenario-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+mat-grid-list {
+    margin: 0 -16px 16px;
+}
+
+mat-grid-tile {
+    transition: margin-top .2s .2s cubic-bezier(0.0, 0.0, 0.2, 1), left .2s .2s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+#spinner {
+    position: fixed;
+    display: inline-block;
+    border-radius: 50%;
+    padding: 12px;
+    background: #FFF;
+    top: calc(50% + 32px);
+    left: 50%;
+    transform: translate(-50%);
+}

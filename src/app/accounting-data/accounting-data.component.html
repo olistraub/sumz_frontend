@@ -1,0 +1,94 @@
+<div [formGroup]="formGroup" *ngIf="_editable">
+  <mat-slide-toggle formControlName="calculateFcf">Free Cashflow-Werte aus GuV-Werten berechnen</mat-slide-toggle>
+</div>
+<div [formGroup]="formGroup" *ngIf="_editable">
+  <mat-slide-toggle formControlName="quarterly">Quartalsweise</mat-slide-toggle>
+</div>
+<div class="scrollable" #scrollable>
+  <table class="mat-table">
+    <thead>
+      <tr class="mat-header-row">
+        <th class="mat-header-cell">
+          <div class="bold">Jahr</div>{{formGroup.controls.quarterly.value ? 'Quartal' : ''}}</th>
+        <ng-container *ngFor="let element of timeSeriesControls; let i = index; trackBy: trackByYearQuarter">
+          <th class="mat-cell" *ngIf="_timeSeriesMethodsService.isInsideBounds(formGroup.controls.quarterly.value, start, end, element.value)">
+            <div id="startyear-container" class="leveraged-field editable" *ngIf="_editable && element.value.year === start.year && (!formGroup.controls.quarterly.value || element.value.quarter === start.quarter)">
+              <div [formGroup]="formGroup.controls.start" class="flex">
+                <mat-form-field class="table-input-right">
+                  <input type="number" matInput formControlName="year" required placeholder="Startjahr" (input)="checkMaxIntegrity(formGroup.controls.base, formGroup.controls.start)">
+                </mat-form-field>
+                <mat-form-field class="small-field" *ngIf="formGroup.controls.quarterly.value" (input)="checkMaxIntegrity(formGroup.controls.base, formGroup.controls.start)">
+                  <mat-select placeholder="Quartal" formControlName="quarter">
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="indicator"></div>
+            </div>
+            <div id="baseyear-container" class="leveraged-field" [class.editable]="_editable" *ngIf="element.value.year === formGroup.controls.base.value.year && (!formGroup.controls.quarterly.value || element.value.quarter === formGroup.controls.base.value.quarter)">
+              <span *ngIf="!_editable">
+                <small>Basisjahr</small>
+                {{formGroup.controls.base.value.year}}{{formGroup.value.quarterly ? ' Q' + formGroup.controls.base.value.quarter : ''}}
+              </span>
+              <div [formGroup]="formGroup.controls.base" class="flex">
+                <mat-form-field class="table-input-right" *ngIf="_editable">
+                  <input type="number" matInput formControlName="year" required placeholder="Basisjahr" (input)="checkMaxIntegrity(formGroup.controls.end, formGroup.controls.base, 2);checkMinIntegrity(formGroup.controls.start, formGroup.controls.base)">
+                </mat-form-field>
+                <mat-form-field class="small-field" *ngIf="formGroup.controls.quarterly.value && _editable">
+                  <mat-select placeholder="Quartal" formControlName="quarter" (input)="checkMaxIntegrity(formGroup.controls.end, formGroup.controls.base, 2);checkMinIntegrity(formGroup.controls.start, formGroup.controls.base)">
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="indicator"></div>
+            </div>
+            <div id="endyear-container" class="leveraged-field" [class.editable]="_editable" *ngIf="element.value.year === end.year && (!formGroup.controls.quarterly.value || element.value.quarter === end.quarter)">
+              <div [formGroup]="formGroup.controls.end" class="flex" *ngIf="_editable">
+                <mat-form-field class="table-input-right" (focusout)="updateTable()">
+                  <input type="number" matInput formControlName="year" required placeholder="Endjahr" (input)="checkMinIntegrity(formGroup.controls.base, formGroup.controls.end, 2)">
+                </mat-form-field>
+                <mat-form-field class="small-field" *ngIf="formGroup.controls.quarterly.value">
+                  <mat-select placeholder="Quartal" formControlName="quarter" (input)="checkMinIntegrity(formGroup.controls.base, formGroup.controls.end, 2)">
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="indicator"></div>
+            </div>
+            <div *ngIf="i === 0 || this.formGroup.controls.liabilities?.controls.timeSeries.at(i-1).value.year !== element.value.year"
+              class="bold">{{element.value.year}}</div>
+            {{formGroup.controls.quarterly.value ? element.value.quarter : ''}}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let ctrl of Array.from(accountingDataParams.keys())">
+        <tr class="mat-row" *ngIf="[undefined, formGroup.value.calculateFcf].includes(accountingDataParams.get(ctrl).showOnCalculation)">
+          <th class="mat-header-cell" [formGroup]="formGroup.controls[ctrl]">
+            {{accountingDataParams.get(ctrl).displayName}}
+            <mat-checkbox formControlName="isHistoric" *ngIf="_editable">Prognostizieren</mat-checkbox>
+            <div *ngIf="!_editable" class="no-bold">&nbsp;{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
+          </th>
+          <td class="mat-cell" *ngFor="let element of formGroup.controls[ctrl].controls.timeSeries.controls; trackBy: trackByYearQuarter">
+            <ng-container *ngIf="_timeSeriesMethodsService.checkVisibility(element.value, formGroup.controls[ctrl].controls.isHistoric.value, formGroup.controls.quarterly.value, this.formGroup.controls.base.value, end, accountingDataParams.get(ctrl).shiftDeterministic)">
+              <span class="table-data" *ngIf="!_editable">{{element.value.amount}}</span>
+              <mat-form-field class="table-input-right" [formGroup]="element" *ngIf="_editable">
+                <input type="text" matInput formControlName="amount" appToDouble required>
+              </mat-form-field>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

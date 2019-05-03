@@ -1,0 +1,38 @@
+<mat-toolbar role="header" color="primary" class="mat-elevation-z4" fxLayout="row" fxLayoutAlign="space-between center">
+  <a routerLink="" id="logo-link">
+    <img id="logo" src="../assets/logo.svg" alt="business horizon">
+  </a>
+  <div>
+    <button mat-icon-button id="user-menu-btn" [matMenuTriggerFor]="userMenu" [class.hide-menu]="!isUserLoggedIn()">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button id="ellipsis-menu-btn" [matMenuTriggerFor]="ellipsisMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<main [@routerTransition]="getState(o)">
+  <router-outlet #o="outlet"></router-outlet>
+</main>
+
+<mat-menu class="user-menu" #userMenu="matMenu">
+  <button mat-menu-item id="change-btn" routerLink="/changepassword">
+    <mat-icon>edit</mat-icon>
+    <span>Passwort ändern</span>
+  </button>
+  <button mat-menu-item id="delete-btn" routerLink="/users/delete">
+    <mat-icon>delete</mat-icon>
+    <span>Account löschen</span>
+  </button>
+  <button mat-menu-item id="logout-btn" routerLink="/login" (click)='logout()'>
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Abmelden</span>
+  </button>
+</mat-menu>
+
+<mat-menu #ellipsisMenu="matMenu">
+  <button mat-menu-item (click)="openImportDialog()" *ngIf="isUserLoggedIn()">Szenario importieren</button>
+  <a mat-menu-item href="https://github.com/johanngoltz/sumz-ui/" target="_blank">GitHub</a>
+  <button mat-menu-item routerLink="/credits">Lizenzen</button>
+</mat-menu>

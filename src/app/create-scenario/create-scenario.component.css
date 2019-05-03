@@ -1,0 +1,80 @@
+mat-vertical-stepper {
+    background: none;
+}
+
+.form-container {
+    min-width: 600px;
+    display: inline-block;
+    max-width: calc(100% - 40px);
+}
+
+mat-form-field:not(.inline) {
+    display: block;
+}
+
+.stepper-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0 20px;
+}
+
+#prognosis {
+    margin: -10px 0 0 28px;
+    transition: opacity .25s;
+}
+
+#prognosis.disabled {
+    opacity: 0.37;
+    pointer-events: none;
+}
+  
+mat-radio-button {
+    margin: 5px 0 5px;
+}
+
+mat-radio-button mat-icon {
+    vertical-align: middle;
+}
+
+.grey {
+    color: rgba(0,0,0,0.54);
+    font-size: 12px;
+}
+
+.info {
+    max-width: 600px;
+    background: whitesmoke;
+    margin: 16px -24px 0;
+    padding: 1px 24px 8px;
+    border-top: 1px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.info-action {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 -12px;
+}
+
+.actions {
+    position: sticky;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0 5px 0;
+}
+
+mat-card {
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.navigation-disabled ::ng-deep .mat-step-header {
+    pointer-events: none;
+}

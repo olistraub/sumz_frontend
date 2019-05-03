@@ -1,0 +1,7 @@
+<mat-nav-list>
+  <h3 matSubheader>Vorhandene Szenarien</h3>
+  <a (click)="selectScenario(scenario)" mat-list-item *ngFor="let scenario of scenarios$ | async">
+      <div class="title" matLine>{{scenario.scenarioName}}</div>
+      <div class="description" matLine>{{scenario.scenarioDescription}}</div>
+  </a>
+</mat-nav-list>

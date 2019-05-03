@@ -1,0 +1,9 @@
+dist: trusty
+language: node_js
+node_js:
+  - 'lts/*'
+before_script:
+  - ng lint
+cache:
+  directories:
+    - node_modules

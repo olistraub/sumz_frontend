@@ -1,0 +1,109 @@
+.scrollable {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    padding-top: 80px;
+}
+
+.mat-table {
+    text-align: right;
+}
+
+.mat-header-cell, .mat-cell {
+    padding: 5px 20px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    border-right: 1px solid #CCC;
+}
+
+.mat-header-row > th, .mat-header-row > td {
+    border-bottom: 1px solid #CCC;
+    position: relative;
+    font-weight: normal;
+    vertical-align: bottom;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.table-input-right {
+    text-align: right;
+    width: 80px;
+}
+
+#remove_year {
+    position: absolute;
+}
+
+.leveraged-field {
+    position: absolute;
+    top: -60px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.indicator {
+    border-left: 1px solid #ccc;
+    flex-grow: 1;
+}
+
+.editable > .indicator {
+    margin-top: -16px;
+}
+
+.leveraged-field > mat-form-field {
+    flex-grow: 0;
+}
+
+.leveraged-field .small-field ::ng-deep .mat-form-field-infix {
+    width: 40px;
+}
+
+#startyear-container {
+    left: -3px;
+    transform: translateX(-50%);
+}
+
+#baseyear-container {
+    left: 0;
+    bottom: 30px;
+    right: 0;
+}
+
+#baseyear-container > span {
+    text-align: center;
+}
+
+#startyear-container, #baseyear-container {
+    align-items: center;
+}
+
+#endyear-container {
+    right: 0;
+    align-items: flex-end;
+}
+
+#endyear-container:not(.editable) {
+    opacity: 0;
+}
+
+mat-checkbox {
+    display: block;
+    font-weight: normal;
+}
+
+.no-bold {
+    font-weight: normal;
+}
+
+.flex {
+    display: flex;
+}

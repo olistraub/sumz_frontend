@@ -1,0 +1,12 @@
+.title {
+    font-weight: bold;
+}
+
+.description {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.title, .description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

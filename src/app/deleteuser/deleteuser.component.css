@@ -1,0 +1,36 @@
+.content-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#delete-form {
+    padding-top: 10px;
+}
+
+.delete-card {
+    max-width: 400px;
+    width: 400px;
+}
+
+.delete-icon {
+    vertical-align: middle;
+    margin-right: 7px;
+}
+
+#delete-btn {
+    width: 90%;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.delete-footer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+mat-form-field {
+    width: 90%;
+}

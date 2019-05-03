@@ -1,0 +1,41 @@
+<div class="content-container">
+  <mat-card class="login-card" [class.busy]="loading">
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    <mat-card-title>Login</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form [formGroup]="loginFormGroup" id="login-form" (ngSubmit)="onSubmit()">
+        <p>
+          <mat-icon class="login-icon">mail</mat-icon>
+          <mat-form-field>
+            <input type="text" id="email" name="email" matInput placeholder="E-Mail" required formControlName="mailCtrl">
+            <mat-error *ngIf="mailCtrl.errors?.required">
+              Dieses Feld ist ein
+              <strong>Pflichtfeld</strong>
+            </mat-error>
+            <mat-error *ngIf="mailCtrl.errors?.email">
+              Bitte geben Sie eine gültige E-Mail-Adresse ein
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-icon class="login-icon">lock</mat-icon>
+          <mat-form-field>
+            <input [type]="hide ? 'password' : 'text'" id="password" name="password" matInput placeholder="Passwort" required formControlName="pwdCtrl">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            <mat-error *ngIf="pwdCtrl.errors?.required">
+              Dieses Feld ist ein
+              <strong>Pflichtfeld</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <br>
+        <button mat-raised-button [disabled]="loading" color="accent" class="login-btn">Login</button>
+      </form>
+      <div class="login-footer">
+        <button mat-button class="signup-btn" routerLink="../registration">Jetzt anmelden!</button>
+        <button mat-button class="forgot-btn" routerLink="../newpasswordemail">Passwort vergessen?</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

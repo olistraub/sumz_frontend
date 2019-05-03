@@ -1,0 +1,181 @@
+<div class="content-container">
+  <h1>
+    {{(forScenario$ | async)?.scenarioName}}
+    <div [@toggleEditAnimation]="editable">
+      <button type="button" mat-button color="primary" *ngIf="!editable" (click)="setEditable(true)">
+        Szenario bearbeiten
+      </button>
+      <button type="button" mat-button color="primary" *ngIf="editable" (click)="setEditable(false)" class="space-right" [disabled]="busy">
+        Änderungen Verwerfen
+      </button>
+      <button type="button" mat-raised-button color="accent" *ngIf="editable" (click)="setEditable(false, true)" [disabled]="busy">
+        Speichern
+      </button>
+    </div>
+  </h1>
+  <!-- panels for different parts of Scenario-->
+  <mat-accordion multi="true" class="headers-align" [class.busy]="busy">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true" [formGroup]="formGroup">
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Daten
+        </mat-panel-title>
+        <mat-panel-description>
+          Kopfdaten des Szenarios
+          <mat-icon>work</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="divided-form">
+        <div>
+          <h3>Grundlegendes</h3>
+          <mat-form-field floatLabel="always">
+            <input matInput placeholder="Name" formControlName="scenarioName" />
+            <mat-error *ngIf="formGroup.controls.scenarioName.hasError('required')">
+              Name wird
+              <strong>benötigt</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field floatLabel="always">
+            <textarea matInput cdkTextareaAutosize placeholder="Beschreibung" formControlName="scenarioDescription"></textarea>
+          </mat-form-field>
+        </div>
+        <mat-divider vertical="true"></mat-divider>
+        <div>
+          <h3>Umweltfaktoren</h3>
+          <mat-form-field floatLabel="always" *ngFor="let paramEntry of Object.entries(environmentParams); trackBy: trackByName">
+            <input matInput type="text" appToDouble [placeholder]="paramEntry[1].displayName" [formControlName]="paramEntry[0]" />
+            <span matPrefix>% &nbsp;</span>
+            <mat-error *ngIf="formGroup.controls[paramEntry[0]].hasError('required')">
+              Dieses Feld wird
+              <strong>benötigt</strong>
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls[paramEntry[0]].hasError('pattern')">
+              Dieses Feld erlaubt nur Zahlen
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls[paramEntry[0]].hasError('min') || formGroup.controls[paramEntry[0]].hasError('max')">
+              Der Wert muss zwischen 0% und 100% liegen
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Weiter</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Cashflows
+        </mat-panel-title>
+        <mat-panel-description>
+          Details für Cashflowberechnung
+          <mat-icon>euro_symbol</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-accounting-data [initialData]="forScenario$" (formGroupOutput)="accountingDataFormGroup = $event" [editable]="editable"></app-accounting-data>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Zurück</button>
+        <button mat-button color="primary" (click)="nextStep()">Weiter</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <!-- Panel for Comparison-->
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true" [formGroup]="configFormGroup">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Auswertung
+        </mat-panel-title>
+        <mat-panel-description>
+          Alle Ergebnisse
+          <mat-icon>bar_chart</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="selection">
+        <mat-checkbox class="margin" formControlName="cvd">CVD</mat-checkbox>
+        <mat-checkbox class="margin" formControlName="apv">APV</mat-checkbox>
+        <mat-checkbox class="margin" formControlName="fcf">FCF</mat-checkbox>
+        <mat-checkbox class="margin" formControlName="fte">FTE</mat-checkbox>
+      </div>
+
+      <div class="flex-container">
+        <div [hidden]="!configFormGroup.controls.cvd.value" class="flex-item">
+          <mat-divider></mat-divider>
+          <h1>Unternehmenswertverteilung</h1>
+          <div [chart]="chart" [hidden]="!(forScenario$ | async)?.stochastic"></div>
+          <p [hidden]="(forScenario$ | async)?.stochastic">Bei einer deterministischen Berechnung gibt es keine Verteilung</p>
+        </div>
+
+        <div [hidden]="!configFormGroup.controls.apv.value" class="flex-item">
+          <mat-divider></mat-divider>
+          <h1>Ergebnis APV</h1>
+          <table class="mat-table">
+            <thead>
+              <tr class="mat-header-row">
+                <th class="mat-header-cell">Unternehmenswert</th>
+                <th class="mat-header-cell">Bilanzsumme</th>
+                <th class="mat-header-cell">Verbindlichkeiten</th>
+                <th class="mat-header-cell">Steuervergünstigungen</th>
+                <th class="mat-header-cell">Barwert der Cashflows</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mat-row">
+                <td class="mat-cell" class="bold">{{(forScenario$ | async)?.apvValuationResult?.companyValue | number:'1.2-2'}}€</td>
+                <td class="mat-cell">{{(forScenario$ | async)?.apvValuationResult?.marketValueTotalAssets | number:'1.2-2'}}€</td>
+                <td class="mat-cell">{{(forScenario$ | async)?.apvValuationResult?.totalLiabilities | number:'1.2-2'}}€</td>
+                <td class="mat-cell">{{(forScenario$ | async)?.apvValuationResult?.taxShield | number:'1.2-2'}}€</td>
+                <td class="mat-cell">{{(forScenario$ | async)?.apvValuationResult?.presentValueOfCashflows | number:'1.2-2'}}€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div [hidden]="!configFormGroup.controls.fcf.value" class="flex-item">
+          <mat-divider></mat-divider>
+          <h1>Ergebnis FCF</h1>
+          <table class="mat-table">
+            <thead>
+              <tr class="mat-header-row">
+                <th class="mat-header-cell">Unternehmenswert</th>
+                <th class="mat-header-cell">Bilanzsumme</th>
+                <th class="mat-header-cell">Verbindlichkeiten</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mat-row">
+                <td class="mat-cell" class="bold">{{(forScenario$ | async)?.fcfValuationResult?.companyValue | number:'1.2-2'}}€</td>
+                <td class="mat-cell">{{(forScenario$ | async)?.fcfValuationResult?.marketValueTotalAssets | number:'1.2-2'}}€</td>
+                <td class="mat-cell">{{(forScenario$ | async)?.fcfValuationResult?.totalLiabilities | number:'1.2-2'}}€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div [hidden]="!configFormGroup.controls.fte.value" class="flex-item">
+          <mat-divider></mat-divider>
+          <h1>Ergebnis FTE</h1>
+          <table class="mat-table">
+            <thead>
+              <tr class="mat-header-row">
+                <th class="mat-header-cell">Unternehmenswert</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mat-row">
+                <td class="mat-cell" class="bold">{{(forScenario$ | async)?.fteValuationResult?.companyValue | number:'1.2-2'}}€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Zurück</button>
+        <button mat-button color="primary" (click)="nextStep()">Ende</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

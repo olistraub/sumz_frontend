@@ -1,0 +1,10 @@
+mat-card {
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+mat-card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

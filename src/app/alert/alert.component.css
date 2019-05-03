@@ -1,0 +1,19 @@
+.snack-bar-container {
+    display: flex;
+    /* flex-flow: row wrap; */
+    align-items: center;
+}
+
+.snack-bar-container.mat-accent {
+    background: #2e7d32;
+    color: #FFF;
+}
+
+.snack-bar-container.mat-warn {
+    background: #c62828;
+    color: #FFF;
+}
+
+.snackbar-icon {
+    margin-right: 7px;
+}

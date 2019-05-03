@@ -1,0 +1,54 @@
+.content-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#register-form {
+    padding-top: 10px;
+}
+
+.register-card {
+    max-width: 400px;
+    width: 400px;
+}
+
+.register-icon {
+    vertical-align: middle;
+    margin-right: 7px;
+}
+
+.register-btn {
+    width: 90%;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.forgot-btn {
+    width: auto;
+    text-align: right;
+    margin-left: auto;
+    margin-right: 5%;
+    margin-top: 5px;
+    color: darkgray;
+}
+
+.login-btn {
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: auto;
+    margin-top: 5px;
+    color: darkgray;
+}
+
+.register-footer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+mat-form-field {
+    width: 90%;
+}

@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Szenario importieren</h1>
+<mat-progress-bar mode="indeterminate" color="accent" [class.busy]="creatingScenario"></mat-progress-bar>
+<div mat-dialog-content [class.busy]="creatingScenario">
+  <p>Wählen Sie eine JSON-Datei zum Importieren aus:</p>
+  <button mat-flat-button color="primary" (click)="fileInput.click()" id="select-button" [disabled]="readingScenario">
+    Datei auswählen
+  </button>
+  <input hidden type="file" #fileInput (input)="selectFile($event)">
+  <div class="flex" [class.busy]="readingScenario">
+    <mat-icon>{{scenarioIsValid ? 'check_circle' : (scenarioIsValid === undefined ? 'info' : 'error')}}</mat-icon>
+    <p *ngIf="scenarioIsValid">
+      Die importierte Datei scheint ein valides Szenario zu sein. Klicken Sie auf den untenstehenden Button, um den Import abzuschließen.
+    </p>
+    <p *ngIf="scenarioIsValid === undefined">
+      Bitte wählen Sie zuerst eine Datei zum Import aus
+    </p>
+    <p *ngIf="scenarioIsValid === false">
+      Die importierte Datei scheint kein valides Szenario zu sein.
+    </p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial>Abbrechen</button>
+  <button mat-raised-button color="accent" [disabled]="!scenarioIsValid || readingScenario || creatingScenario" (click)="createScenario()">Szenario importieren</button>
+</div>

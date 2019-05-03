@@ -1,0 +1,76 @@
+<div class="content-container">
+  <h1>Neues Szenario erstellen</h1>
+  <mat-vertical-stepper linear [class.navigation-disabled]="busy">
+    <mat-step label="Grundlegendes" [stepControl]="formGroup1">
+      <form [formGroup]="formGroup1">
+        <mat-card class="form-container">
+          <mat-card-title>Grundlegendes</mat-card-title>
+          <mat-card-content>
+            <mat-form-field>
+              <input type="text" id="name" name="name" matInput placeholder="Name" required formControlName="scenarioName">
+            </mat-form-field>
+            <mat-form-field>
+              <textarea  matInput cdkTextareaAutosize placeholder="Beschreibung" formControlName="scenarioDescription" required></textarea>
+            </mat-form-field>
+            <div class="info">
+              <h4>Aus bestehendem Szenario erstellen</h4>
+              <p>
+                Sie können bereits bestehende Szenarien als Vorlage für dieses Szenario nutzen. Wählen Sie hierzu über den folgenden Button
+                einfach ein Szenario aus, um dessen Daten in die Eingabefelder zu übertragen.
+              </p>
+              <div class="info-action">
+                <button mat-button type="button" color="accent" (click)="openSelectionSheet()">Bestehendes Szenario auswählen</button>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="stepper-actions">
+            <a mat-button routerLink="">Abbrechen</a>
+            <button mat-raised-button color="accent" matStepperNext>Weiter</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step label="Umweltfaktoren" [stepControl]="formGroup2">
+      <form [formGroup]="formGroup2">
+        <mat-card class="form-container">
+          <mat-card-title>Umweltfaktoren</mat-card-title>
+          <mat-card-content>
+            <mat-form-field floatLabel="always" *ngFor="let paramEntry of Object.entries(environmentParams); trackBy: trackByName">
+              <input matInput type="text" appToDouble [placeholder]="paramEntry[1].displayName" [formControlName]="paramEntry[0]" required/>
+              <span matPrefix>% &nbsp;</span>
+              <mat-error *ngIf="formGroup2.controls[paramEntry[0]].hasError('required')">
+                Dieses Feld wird
+                <strong>benötigt</strong>
+              </mat-error>
+              <mat-error *ngIf="formGroup2.controls[paramEntry[0]].hasError('pattern')">
+                Dieses Feld erlaubt nur Zahlen
+              </mat-error>
+              <mat-error *ngIf="formGroup2.controls[paramEntry[0]].hasError('min') || formGroup2.controls[paramEntry[0]].hasError('max')">
+                Der Wert muss zwischen 0% und 100% liegen
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions class="stepper-actions">
+            <button mat-button matStepperPrevious>Zurück</button>
+            <button mat-raised-button matStepperNext color="accent">Weiter</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step label="Zahlungsreihe angeben" [stepControl]="formGroup3">
+      <form [formGroup]="formGroup3" (ngSubmit)="createScenario()">
+        <mat-card class="form-container" [class.busy]="busy">
+          <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+          <mat-card-title>Zahlungsreihe</mat-card-title>
+          <mat-card-content>
+            <app-accounting-data [editable]="true" [initialData]="importedScenario" (formGroupOutput)="formGroup3 = $event"></app-accounting-data>
+          </mat-card-content>
+          <mat-card-actions class="stepper-actions">
+            <button mat-button matStepperPrevious [disabled]="busy">Zurück</button>
+            <button mat-raised-button matStepperNext color="accent" [disabled]="busy">Szenario anlegen</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
