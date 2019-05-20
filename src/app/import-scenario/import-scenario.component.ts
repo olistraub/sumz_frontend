@@ -37,7 +37,7 @@ export class ImportScenarioComponent implements OnInit {
 
   generateJSON() {
     try {
-      this.scenario = JSON.parse(this._fileReader.result);
+      this.scenario = JSON.parse(this._fileReader.result as string);
       this.scenarioIsValid = this.checkValidity();
     } catch (error) {
       this.scenarioIsValid = false;
