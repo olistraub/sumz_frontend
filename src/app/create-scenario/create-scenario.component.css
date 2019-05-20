@@ -3,9 +3,15 @@ mat-vertical-stepper {
 }
 
 .form-container {
-    min-width: 600px;
+    min-width: 95%;
     display: inline-block;
     max-width: calc(100% - 40px);
+}
+
+@media screen and (min-width: 800px){
+    .form-container{
+        min-width: 600px;
+    } 
 }
 
 mat-form-field:not(.inline) {
