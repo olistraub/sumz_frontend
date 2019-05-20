@@ -104,15 +104,15 @@ export class CreateScenarioComponent implements OnInit {
 
   insertScenarioData(scenario: Scenario) {
     if (scenario) {
-      if (this.formGroup1.value.name !== 0) {
+      if (this.formGroup1.value.name === null) {
         this.formGroup1.controls.name.setValue(scenario.scenarioName);
       }
-      if (this.formGroup1.value.description !== 0) {
+      if (this.formGroup1.value.description === null) {
         this.formGroup1.controls.description.setValue(scenario.scenarioDescription);
       }
       Object.entries(this.formGroup2.controls).forEach(([key, control]) => control.setValue(scenario[key] * 100));
       this.importedScenario.emit(scenario);
-      this._alertService.success(`Die Daten des Szenarios "${scenario.scenarioName}" wurden erfolgreich Ã¼bernommen`);
+      this._alertService.success(`Die Daten des Szenarios "${scenario.scenarioName}" wurden erfolgreich übernommen`);
     }
   }
 
