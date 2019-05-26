@@ -2,7 +2,7 @@
   <h1>
     {{(forScenario$ | async)?.scenarioName}}
     <div [@toggleEditAnimation]="editable">
-      <button type="button" mat-button color="primary" *ngIf="!editable" (click)="setEditable(true)">
+      <button type="button" mat-raised-button color="accent" *ngIf="!editable" (click)="setEditable(true)">
         Szenario bearbeiten
       </button>
       <button type="button" mat-button color="primary" *ngIf="editable" (click)="setEditable(false)" class="space-right" [disabled]="busy">
@@ -114,10 +114,10 @@
           <table class="mat-table">
             <thead>
               <tr class="mat-header-row">
-                <th class="mat-header-cell">Unter&shy;nehmens&shy;wert</th>
-                <th class="mat-header-cell">Bilanz&shy;summe</th>
-                <th class="mat-header-cell">Verbindlich&shy;keiten</th>
-                <th class="mat-header-cell">Steuer&shy;vergünst&shy;igungen</th>
+                <th class="mat-header-cell">Unternehmenswert</th>
+                <th class="mat-header-cell">Bilanzsumme</th>
+                <th class="mat-header-cell">Verbindlichkeiten</th>
+                <th class="mat-header-cell">Steuervergünstigungen</th>
                 <th class="mat-header-cell">Barwert der Cashflows</th>
               </tr>
             </thead>
