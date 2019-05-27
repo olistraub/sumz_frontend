@@ -112,7 +112,7 @@ export class CreateScenarioComponent implements OnInit {
       }
       Object.entries(this.formGroup2.controls).forEach(([key, control]) => control.setValue(scenario[key] * 100));
       this.importedScenario.emit(scenario);
-      this._alertService.success(`Die Daten des Szenarios "${scenario.scenarioName}" wurden erfolgreich übernommen`);
+      this._alertService.success(`Die Daten des Szenarios "${scenario.scenarioName}" wurden erfolgreich Ã¼bernommen`);
     }
   }
 
