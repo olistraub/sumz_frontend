@@ -82,7 +82,7 @@ export class CreateScenarioComponent implements OnInit {
           };
         }
       }
-
+      
       this._scenariosService.addScenario(scenario)
         .subscribe(
           (createdScenario) => {

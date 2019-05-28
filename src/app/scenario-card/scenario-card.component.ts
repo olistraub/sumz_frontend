@@ -51,5 +51,7 @@ export class ScenarioCardComponent implements OnInit {
     this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: this.scenario } });
   }
 
+
+    
 }
 
