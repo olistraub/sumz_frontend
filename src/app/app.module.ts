@@ -32,7 +32,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExportScenarioComponent } from './export-scenario/export-scenario.component';
 import { ImportScenarioComponent } from './import-scenario/import-scenario.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -9,5 +9,23 @@
     <button mat-menu-item (click)="exportScenario()">Exportieren</button>
     <button mat-menu-item (click)="removeScenario()">Löschen</button>
   </mat-menu>
-  <mat-card-content>{{scenario.valueOf().scenarioDescription}}</mat-card-content>
+  <mat-card-subtitle>
+      {{scenario.valueOf().scenarioDescription}}
+    </mat-card-subtitle>
+  <mat-card-content>
+      <p>
+        <b>Unternehmenswert:</b> 
+      </p>
+      <p>
+        APV: {{(scenario.valueOf().apvValuationResult.companyValue) | currency: ' &euro;' : 'symbol-narrow'}}
+      </p>
+      <p>
+        FCF: {{scenario.valueOf().fcfValuationResult.companyValue | currency: ' &euro;' : 'symbol-narrow'}}
+      </p>
+      <p>
+        FTE: {{scenario.valueOf().fteValuationResult.companyValue | currency: ' &euro;' : 'symbol-narrow'}}
+      </p>
+        
+     
+  </mat-card-content>
 </mat-card>
