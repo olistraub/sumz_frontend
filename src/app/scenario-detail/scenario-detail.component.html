@@ -15,7 +15,7 @@
   </h1>
   <!-- panels for different parts of Scenario-->
   <mat-accordion multi="true" class="headers-align" [class.busy]="busy">
-    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true" [formGroup]="formGroup">
+    <mat-expansion-panel expanded="true" hideToggle="false" [formGroup]="formGroup">
       <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -59,12 +59,9 @@
           </mat-form-field>
         </div>
       </div>
-      <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">Weiter</button>
-      </mat-action-row>
     </mat-expansion-panel>
 
-    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+    <mat-expansion-panel expanded="true" hideToggle="false">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Cashflows
@@ -75,14 +72,10 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <app-accounting-data [initialData]="forScenario$" (formGroupOutput)="accountingDataFormGroup = $event" [editable]="editable"></app-accounting-data>
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Zurück</button>
-        <button mat-button color="primary" (click)="nextStep()">Weiter</button>
-      </mat-action-row>
     </mat-expansion-panel>
 
     <!-- Panel for Comparison-->
-    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true" [formGroup]="configFormGroup">
+    <mat-expansion-panel expanded="true" hideToggle="false" [formGroup]="configFormGroup">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Auswertung
@@ -171,11 +164,6 @@
           </table>
         </div>
       </div>
-
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Zurück</button>
-        <button mat-button color="primary" (click)="nextStep()">Ende</button>
-      </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

@@ -188,18 +188,6 @@ export class ScenarioDetailComponent implements OnInit {
     });
   }
 
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
-
   saveScenario() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
 
