@@ -19,6 +19,7 @@ export class CreateScenarioComponent implements OnInit {
   formGroup2: FormGroup;
   formGroup3: FormGroup;
   busy: Boolean;
+  color: string;
   importedScenario: EventEmitter<Scenario>;
   accountingDataParams = accountingDataParams; // fix scope issues in view
   environmentParams = environmentParams;
@@ -34,6 +35,7 @@ export class CreateScenarioComponent implements OnInit {
 
   ngOnInit() {
     this.busy = false;
+    this.color = "red";
     this.formGroup1 = this._formBuilder.group({
       scenarioName: ['', Validators.required],
       scenarioDescription: ['', Validators.required],
@@ -45,6 +47,10 @@ export class CreateScenarioComponent implements OnInit {
     this.formGroup2 = this._formBuilder.group(environmentParamControls);
     this.formGroup3 = this._formBuilder.group({});
     this.importedScenario = new EventEmitter<Scenario>();
+  }
+
+  onColorChanged(evt){
+    this.color = evt.source.id;
   }
 
   createScenario() {
@@ -61,8 +67,9 @@ export class CreateScenarioComponent implements OnInit {
         ...this.formGroup2.value,
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
+        cardColor: this.color,
       };
-
+      
       Object.keys(this.formGroup2.controls).forEach(param => scenario[param] = scenario[param] / 100);
       for (const [paramName, paramDefinition] of this.accountingDataParams) {
         if (this._timeSeriesMethodsService.shouldDisplayAccountingDataParam(

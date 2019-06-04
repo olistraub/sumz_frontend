@@ -12,12 +12,22 @@
             <mat-form-field>
               <textarea  matInput cdkTextareaAutosize placeholder="Beschreibung" formControlName="scenarioDescription" required></textarea>
             </mat-form-field>
-            <!-- Hier könnte später die Farbe bei erstellen der Kachel ausgewählt werden, es muss dann nur im Scenario direkt gespeichert werden -->
+            <!-- Hier kï¿½nnte spï¿½ter die Farbe bei erstellen der Kachel ausgewï¿½hlt werden, es muss dann nur im Scenario direkt gespeichert werden -->
             <div name="farbauswahl">
-                <label for="color">Schriftfarbe</label>
-                <input id="color" type="color">
-                <label for="background">Kartenfarbe</label>
-                <input id="background" type="color" value="#ffffff">
+
+                <mat-button-toggle-group #group="matButtonToggleGroup">
+                    <mat-button-toggle id="red" value="" checked="true" (change)="onColorChanged($event)">
+                      </mat-button-toggle>
+                    <mat-button-toggle id="green" value="" (change)="onColorChanged($event)">
+                      </mat-button-toggle>
+                    <mat-button-toggle id="black" value="" (change)="onColorChanged($event)">
+                      </mat-button-toggle>
+                    <mat-button-toggle id="blue" value="" (change)="onColorChanged($event)">
+                      </mat-button-toggle>
+                    <mat-button-toggle id="yellow" value="" (change)="onColorChanged($event)">
+                      </mat-button-toggle>
+                  </mat-button-toggle-group>
+
             </div>
             <div class="info">
               <h4>Aus bestehendem Szenario erstellen</h4>
