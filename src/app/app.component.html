@@ -32,7 +32,7 @@
 </mat-menu>
 
 <mat-menu #ellipsisMenu="matMenu">
-  <button mat-menu-item (click)="openImportDialog()" *ngIf="isUserLoggedIn()">Szenario importieren</button>
-  <a mat-menu-item href="https://github.com/johanngoltz/sumz-ui/" target="_blank">GitHub</a>
-  <button mat-menu-item routerLink="/credits">Lizenzen</button>
+  <button mat-menu-item id="import-btn" (click)="openImportDialog()" *ngIf="isUserLoggedIn()">Szenario importieren</button>
+  <a id="github-btn" mat-menu-item href="https://github.com/johanngoltz/sumz-ui/" target="_blank">GitHub</a>
+  <button mat-menu-item id="lizenzen-btn" routerLink="/credits">Lizenzen</button>
 </mat-menu>
