@@ -9,7 +9,8 @@
   <div class="flex" [class.busy]="readingScenario">
     <mat-icon>{{scenarioIsValid ? 'check_circle' : (scenarioIsValid === undefined ? 'info' : 'error')}}</mat-icon>
     <p *ngIf="scenarioIsValid">
-      Die importierte Datei scheint ein valides Szenario zu sein. Klicken Sie auf den untenstehenden Button, um den Import abzuschließen.
+      Die importierte Datei scheint ein valides Szenario zu sein. Klicken Sie auf den untenstehenden Button, um den
+      Import abzuschließen.
     </p>
     <p *ngIf="scenarioIsValid === undefined">
       Bitte wählen Sie zuerst eine Datei zum Import aus
@@ -20,6 +21,7 @@
   </div>
 </div>
 
+
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -27,16 +29,81 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-
-    <p>{{ '{' }}"id":&lt;number&gt;,"stochastic":&lt;boolean&gt;,"scenarioName":"&lt;String&gt;","scenarioDescription":"&lt;String&gt;","periods":&lt;number&gt;,"businessTaxRate":&lt;float&gt;,"corporateTaxRate":&lt;float&gt;,"solidaryTaxRate":&lt;float&gt;,"equityInterestRate":&lt;float&gt;,"interestOnLiabilitiesRate":&lt;float&gt;,"depreciation":&lt;null\value&gt;,"additionalIncome":&lt;null\value&gt;,"additionalCosts":&lt;null\value&gt;,"investments":&lt;null\value&gt;,"divestments":&lt;null\value&gt;,"revenue":&lt;null\value&gt;,"costOfMaterial":&lt;null\value&gt;,"costOfStaff":&lt;null\value&gt;,"liabilities":{{ '{' }}"isHistoric":&lt;boolean&gt;,"timeSeries":[{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }},{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }}]{{ '}' }},"freeCashFlows":{{ '{' }}"isHistoric":&lt;boolean&gt;,"timeSeries":[{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }},{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }}]{{ '}' }},"companyValueDistribution":{{ '{' }}"xValues":&lt;30*float&gt;],"yValues":[&lt;30*float&gt;,{{ '{' }}"id":&lt;number&gt;,"stochastic":&lt;boolean&gt;,"scenarioName":"&lt;String&gt;","scenarioDescription":"&lt;String&gt;","periods":&lt;number&gt;,"businessTaxRate":&lt;float&gt;,"corporateTaxRate":&lt;float&gt;,"solidaryTaxRate":&lt;float&gt;,"equityInterestRate":&lt;float&gt;,"interestOnLiabilitiesRate":&lt;float&gt;,"depreciation":&lt;null\value&gt;,"additionalIncome":&lt;null\value&gt;,"additionalCosts":&lt;null\value&gt;,"investments":&lt;null\value&gt;,"divestments":&lt;null\value&gt;,"revenue":&lt;null\value&gt;,"costOfMaterial":&lt;null\value&gt;,"costOfStaff":&lt;null\value&gt;,"liabilities":{{ '{' }}"isHistoric":&lt;boolean&gt;,"timeSeries":[{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }},{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }}]{{ '}' }},"freeCashFlows":{{ '{' }}"isHistoric":&lt;boolean&gt;,"timeSeries":[{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }},{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }}]{{ '}' }},"companyValueDistribution":{{ '{' }}"xValues":&lt;30*float&gt;],"yValues":[&lt;30*float&gt;]{{ '}' }},"apvValuationResult":{{ '{' }}"companyValue":&lt;number&gt;,"marketValueTotalAssets":&lt;number&gt;,"totalLiabilities":&lt;number&gt;,"presentValueOfCashflows":&lt;number&gt;,"taxShield":&lt;number&gt;{{ '}' }},"fteValuationResult":{{ '{' }}"companyValue":&lt;number&gt;{{ '}' }},"fcfValuationResult":{{ '{' }}"companyValue":&lt;number&gt;,"marketValueTotalAssets":&lt;number&gt;,"totalLiabilities":&lt;number&gt;{{ '}' }}{{ '}' }},{{ '{' }}"id":&lt;number&gt;,"stochastic":&lt;boolean&gt;,"scenarioName":"&lt;String&gt;","scenarioDescription":"&lt;String&gt;","periods":&lt;number&gt;,"businessTaxRate":&lt;float&gt;,"corporateTaxRate":&lt;float&gt;,"solidaryTaxRate":&lt;float&gt;,"equityInterestRate":&lt;float&gt;,"interestOnLiabilitiesRate":&lt;float&gt;,"depreciation":&lt;null\value&gt;,"additionalIncome":&lt;null\value&gt;,"additionalCosts":&lt;null\value&gt;,"investments":&lt;null\value&gt;,"divestments":&lt;null\value&gt;,"revenue":&lt;null\value&gt;,"costOfMaterial":&lt;null\value&gt;,"costOfStaff":&lt;null\value&gt;,"liabilities":{{ '{' }}"isHistoric":&lt;boolean&gt;,"timeSeries":[{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }},{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }}]{{ '}' }},"freeCashFlows":{{ '{' }}"isHistoric":&lt;boolean&gt;,"timeSeries":[{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }},{{ '{' }}"date":{{ '{' }}"year":&lt;number&gt;,"quarter":&lt;null\value&gt;{{ '}' }},"amount":&lt;number&gt;{{ '}' }}]{{ '}' }},"companyValueDistribution":{{ '{' }}"xValues":&lt;30*float&gt;],"yValues":[&lt;30*float&gt;]{{ '}' }},"apvValuationResult":{{ '{' }}"companyValue":&lt;number&gt;,"marketValueTotalAssets":&lt;number&gt;,"totalLiabilities":&lt;number&gt;,"presentValueOfCashflows":&lt;number&gt;,"taxShield":&lt;number&gt;{{ '}' }},"fteValuationResult":{{ '{' }}"companyValue":&lt;number&gt;{{ '}' }},"fcfValuationResult":{{ '{' }}"companyValue":&lt;number&gt;,"marketValueTotalAssets":&lt;number&gt;,"totalLiabilities":&lt;number&gt;{{ '}' }}{{ '}' }}</p>
-
+    <pre>{{ '{' }}
+        "id": &lt;number&gt;,
+        "stochastic": &lt;boolean&gt;,
+        "scenarioName": &lt;String&gt;,
+        "scenarioDescription": &lt;String&gt;,
+        "periods": &lt;number&gt;,
+        "scenarioColor": &lt;String&gt;,
+        "businessTaxRate": &lt;float&gt;,
+        "corporateTaxRate": &lt;float&gt;,
+        "solidaryTaxRate": &lt;float&gt;,
+        "equityInterestRate": &lt;float&gt;,
+        "interestOnLiabilitiesRate": &lt;float&gt;,
+        "depreciation": &lt;null\value&gt;,
+        "additionalIncome": &lt;null\value&gt;,
+        "additionalCosts": &lt;null\value&gt;,
+        "investments": &lt;null\value&gt;,
+        "divestments": &lt;null\value&gt;,
+        "revenue": &lt;null\value&gt;,
+        "costOfMaterial": &lt;null\value&gt;,
+        "costOfStaff": &lt;null\value&gt;,
+        "liabilities": {{ '{' }}
+            "isHistoric": &lt;boolean&gt;,
+            "timeSeries": [
+                {{ '{' }}
+                    "date": {{ '{' }}
+                        "year": &lt;number&gt;,
+                        "quarter": &lt;null\value&gt;
+                    {{ '}' }},
+                    "amount": &lt;number&gt;
+                {{ '}' }}
+            ]
+        {{ '}' }},
+        "freeCashFlows": {{ '{' }}
+            "isHistoric": &lt;boolean&gt;,
+            "timeSeries": [
+                {{ '{' }}
+                    "date": {{ '{' }}
+                        "year": &lt;number&gt;,
+                        "quarter": &lt;null\value&gt;
+                    {{ '}' }},
+                    "amount": &lt;number&gt;
+                {{ '}' }}
+            ]
+        {{ '}' }},
+        "companyValueDistribution": {{ '{' }}
+            "xValues": [
+                &lt;30*float&gt;
+            ],
+            "yValues": [
+                &lt;30*float&gt;
+            ]
+        {{ '}' }},
+        "apvValuationResult": {{ '{' }}
+            "companyValue": &lt;number&gt;,
+            "marketValueTotalAssets": &lt;number&gt;,
+            "totalLiabilities": &lt;number&gt;,
+            "presentValueOfCashflows": &lt;number&gt;,
+            "taxShield": &lt;number&gt;
+        {{ '}' }},
+        "fteValuationResult": {{ '{' }}
+            "companyValue": &lt;number&gt;
+        {{ '}' }},
+        "fcfValuationResult": {{ '{' }}
+            "companyValue": &lt;number&gt;,
+            "marketValueTotalAssets": &lt;number&gt;,
+            "totalLiabilities": &lt;number&gt;
+        {{ '}' }}
+    {{ '}' }}</pre>
 
 
   </mat-expansion-panel>
 
 
-
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close cdkFocusInitial>Abbrechen</button>
-  <button mat-raised-button color="accent" [disabled]="!scenarioIsValid || readingScenario || creatingScenario" (click)="createScenario()">Szenario importieren</button>
-</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close cdkFocusInitial>Abbrechen</button>
+    <button mat-raised-button color="accent" [disabled]="!scenarioIsValid || readingScenario || creatingScenario"
+      (click)="createScenario()">Szenario importieren</button>
+  </div>
