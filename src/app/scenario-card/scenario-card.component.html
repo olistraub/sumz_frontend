@@ -1,4 +1,4 @@
-<mat-card (mouseover)="hovered = true" (mouseout)="hovered = false" [class.mat-elevation-z8]="hovered" mat-ripple matRippleColor="rgba(0,0,0,0.05)">
+<mat-card id="{{scenario.id}}"(mouseover)="hovered = true" (mouseout)="hovered = false" [class.mat-elevation-z8]="hovered" mat-ripple matRippleColor="rgba(0,0,0,0.05)">
   <mat-card-title>
     {{scenario.valueOf().scenarioName}}
     <button type="button" mat-icon-button [matMenuTriggerFor]="scenarioMenu" (click)="toggleScenarioMenu($event)" (mousedown)="$event.stopPropagation()">

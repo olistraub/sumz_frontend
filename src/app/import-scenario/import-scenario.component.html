@@ -104,6 +104,6 @@
 
   <div mat-dialog-actions>
     <button mat-button mat-dialog-close cdkFocusInitial>Abbrechen</button>
-    <button mat-raised-button color="accent" [disabled]="!scenarioIsValid || readingScenario || creatingScenario"
+    <button mat-raised-button id="importScenario" color="accent" [disabled]="!scenarioIsValid || readingScenario || creatingScenario"
       (click)="createScenario()">Szenario importieren</button>
   </div>
