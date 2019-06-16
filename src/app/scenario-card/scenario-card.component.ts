@@ -26,7 +26,6 @@ export class ScenarioCardComponent implements OnInit {
     private _alertService: AlertService,
 	private _dialog: MatDialog,
 	private _router: Router,
-	//private _scenarioDetail: ScenarioDetailComponent,
     private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
