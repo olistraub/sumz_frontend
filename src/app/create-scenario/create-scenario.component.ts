@@ -61,13 +61,13 @@ export class CreateScenarioComponent implements OnInit {
       const quarterly = this.formGroup3.controls.quarterly.value;
 
       this.busy = true;
-      const scenario = {
+      const scenario: Scenario = {
         id: null,
         ...this.formGroup1.value,
         ...this.formGroup2.value,
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
-        cardColor: this.color,
+        scenarioColor: this.color,
       };
       
       Object.keys(this.formGroup2.controls).forEach(param => scenario[param] = scenario[param] / 100);

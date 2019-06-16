@@ -35,3 +35,12 @@ mat-progress-bar.busy {
 .mat-dialog-actions {
     justify-content: flex-end;
 }
+pre{
+    overflow-y: auto;
+    max-height: 200px;
+}
+@media screen and (min-height: 800px){
+    pre{
+        max-height: 400px;
+    }
+}

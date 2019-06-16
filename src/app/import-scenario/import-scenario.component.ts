@@ -22,7 +22,7 @@ export class ImportScenarioComponent implements OnInit {
     private _dialogRef: MatDialogRef<ImportScenarioComponent>) { }
 
   ngOnInit() {
-    this._fileReader.onloadend = this.generateJSON;
+    this._fileReader.onloadend = () => {this.generateJSON();}
   }
 
   selectFile(event) {
@@ -41,7 +41,7 @@ export class ImportScenarioComponent implements OnInit {
       this.scenarioIsValid = this.checkValidity();
     } catch (error) {
       this.scenarioIsValid = false;
-    }
+    } 
     this.readingScenario = false;
   }
 

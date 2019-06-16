@@ -3,7 +3,7 @@ export class Scenario {
     scenarioName: string;
     scenarioDescription: string;
     periods: number;
-    cardColor: string;
+    scenarioColor: string;
 
     equityInterestRate: number;
     interestOnLiabilitiesRate: number;
