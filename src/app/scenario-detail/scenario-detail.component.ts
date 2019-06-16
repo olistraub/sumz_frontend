@@ -1,5 +1,5 @@
 import { animate, keyframes, query, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
@@ -12,6 +12,10 @@ import { AlertService } from '../service/alert.service';
 import { OptionsService } from '../service/options.service';
 import { ScenariosService } from '../service/scenarios.service';
 import { TimeSeriesMethodsService } from '../service/time-series-methods.service';
+import { MatDialog, MatBottomSheet } from '@angular/material';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { ExportScenarioComponent } from '../export-scenario/export-scenario.component';
+import { Wrapper } from '../api/wrapper';
 
 @Component({
   selector: 'app-scenario-detail',
@@ -71,6 +75,7 @@ import { TimeSeriesMethodsService } from '../service/time-series-methods.service
 })
 
 export class ScenarioDetailComponent implements OnInit {
+@Input() scenario: Wrapper<Scenario>;
   forScenario$: Observable<Scenario>;
   forConfig$: Observable<RemoteConfig>;
   formGroup: FormGroup;
@@ -82,7 +87,7 @@ export class ScenarioDetailComponent implements OnInit {
   busy = false;
 
   /* edit mode */
-  editable;
+  editable
 
   /* step holder for panels */
   step = 0;
@@ -97,11 +102,22 @@ export class ScenarioDetailComponent implements OnInit {
     private _optionsService: OptionsService,
     private _alertService: AlertService,
     private _route: ActivatedRoute,
-    private _router: Router,
+	private _router: Router,
+	private _dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet,
     private _timeSeriesMethodsService: TimeSeriesMethodsService) { }
 
   ngOnInit() {
-    this.editable = false;
+	this.editable = false;
+	if (this._scenariosService.help == true) {
+		this.editable = true;
+		this._scenariosService.subsVar = this._scenariosService.invokeOtherComponentFuction.subscribe(() => {
+			this.setEditable(this.editable);
+		});
+	}
+
+	this._scenariosService.help = false;
+    
     this.forScenarioId$ = this._route.paramMap.pipe(
       switchMap(params => {
         return of(Number.parseInt(params.get('id')));
@@ -186,6 +202,24 @@ export class ScenarioDetailComponent implements OnInit {
         this.configFormGroup.setValue(remote.scenarioConfig.get(currentScenario.id).showResult);
       });
     });
+  }
+
+  exportScenario() {
+    this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: this.scenario } });
+  }
+
+  removeScenario() {
+    this._dialog.open(DeleteDialogComponent, { data: { scenario: this.scenario } })
+      .afterClosed().subscribe((result) => {
+        if (result === true) {
+          this._scenariosService.removeScenario(this.scenario.valueOf())
+            .subscribe(
+              removed => this._alertService.success(`Das Szenario "${this.scenario.valueOf().scenarioName}" wurde erfolgreich gelöscht`),
+              error => this._alertService.error(`Das Szenario "${this.scenario.valueOf().scenarioName}" konnte nicht gelöscht werden
+                 (${error.message})`)
+            );
+        }
+      });
   }
 
   saveScenario() {

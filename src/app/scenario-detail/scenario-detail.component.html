@@ -2,7 +2,7 @@
   <h1>
     {{(forScenario$ | async)?.scenarioName}}
     <div [@toggleEditAnimation]="editable">
-      <button type="button" mat-raised-button color="accent" *ngIf="!editable" (click)="setEditable(true)">
+      <button type="button" mat-raised-button color="accent" *ngIf="!editable" (click)="setEditable(true)"class="space-right">
         Szenario bearbeiten
       </button>
       <button type="button" mat-button color="primary" *ngIf="editable" (click)="setEditable(false)" class="space-right" [disabled]="busy">
@@ -10,6 +10,14 @@
       </button>
       <button type="button" mat-raised-button color="accent" *ngIf="editable" (click)="setEditable(false, true)" [disabled]="busy">
         Speichern
+	  </button>
+
+	  <button type="button" mat-raised-button color="accent" *ngIf="!editable"  class="space-right" (click)= removeScenario()>
+        Szenario löschen
+	  </button>
+	  
+	  <button type="button" mat-raised-button color="accent" *ngIf="!editable" (click)= exportScenario() >
+        Szenario exportieren
       </button>
     </div>
   </h1>

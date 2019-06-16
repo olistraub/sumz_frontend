@@ -6,6 +6,9 @@ import { ScenariosService } from '../service/scenarios.service';
 import { Wrapper } from '../api/wrapper';
 import { AlertService } from '../service/alert.service';
 import { ExportScenarioComponent } from '../export-scenario/export-scenario.component';
+import { Router } from '@angular/router';
+//import { ScenarioDetailComponent } from '../scenario-detail/scenario-detail.component';
+
 
 @Component({
   selector: 'app-scenario-card',
@@ -21,7 +24,9 @@ export class ScenarioCardComponent implements OnInit {
 
   constructor(private _scenariosService: ScenariosService,
     private _alertService: AlertService,
-    private _dialog: MatDialog,
+	private _dialog: MatDialog,
+	private _router: Router,
+	//private _scenarioDetail: ScenarioDetailComponent,
     private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
@@ -51,7 +56,11 @@ export class ScenarioCardComponent implements OnInit {
     this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: this.scenario } });
   }
 
+  	changeScenario() {
+	 this._router.navigate(['/scenario', this.scenario.valueOf().id]);
+	 this._scenariosService.help = true;
+	 this._scenariosService.onEditScenario(true);
+	}
 
-    
 }
 
