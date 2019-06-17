@@ -3,7 +3,7 @@
   <div id="no-data-info" *ngIf="(scenarios$ | async)?.length === 0" [@noDataAnimation]>
     Es existieren aktuell keine Szenarien.
   </div>
-  <mat-grid-list cols="4" rowHeight="4:3" [@gridAnimation]="(scenarios$ | async)?.length">
+  <mat-grid-list [cols]="breakpoint" rowHeight="4:4" [@gridAnimation]="(scenarios$ | async)?.length" (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let scenario of scenarios$ | async">
       <app-scenario-card [scenario]="scenario" [routerLink]="['/scenario', scenario.id]"></app-scenario-card>
     </mat-grid-tile>

@@ -51,10 +51,28 @@ import { ScenariosService } from '../service/scenarios.service';
 })
 export class ScenariosComponent implements OnInit {
   scenarios$: Observable<Scenario[]>;
+  breakpoint = 1;
   constructor(private scenariosService: ScenariosService) { }
 
   ngOnInit() {
     this.scenarios$ = this.scenariosService.getScenarios();
+    //this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
+    this.breakpoint = this.calcResp(window.innerWidth)
   }
+
+  onResize(event) {
+    //this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 6;
+    this.breakpoint = this.calcResp(event.target.innerWidth)
+  }
+
+  calcResp(width){
+
+    width = width - 60;
+    var anz = width / 300;
+
+    return Math.round(anz);
+  }
+
+
 
 }
