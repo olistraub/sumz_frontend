@@ -6,6 +6,7 @@
     </button>
   </mat-card-title>
   <mat-menu #scenarioMenu="matMenu">
+	  <button mat-menu-item (click)="changeScenario()">Bearbeiten</button>
     <button mat-menu-item (click)="exportScenario()">Exportieren</button>
     <button mat-menu-item (click)="removeScenario()">Löschen</button>
   </mat-menu>

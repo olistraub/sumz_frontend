@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, EventEmitter } from '@angular/core';
 import { TypedAxiosInstance } from 'restyped-axios';
-import { combineLatest, from, Observable, of, ReplaySubject, throwError, zip } from 'rxjs';
+import { combineLatest, from, Observable, of, ReplaySubject, throwError, zip, Subscription } from 'rxjs';
 import { debounceTime, filter, flatMap, retry, switchMap } from 'rxjs/operators';
 import { SumzAPI } from '../api/api';
 import { Scenario } from '../api/scenario';
@@ -104,5 +104,13 @@ export class ScenariosService {
       retry(2),
       switchMap(response => of(response.data))
     );
+  }
+
+  invokeOtherComponentFuction = new EventEmitter();
+  subsVar: Subscription;
+  help: boolean;
+
+  onEditScenario(editable:boolean) {
+	  this.invokeOtherComponentFuction.emit();
   }
 }
