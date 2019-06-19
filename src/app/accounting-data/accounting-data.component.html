@@ -1,8 +1,32 @@
 <div [formGroup]="formGroup" *ngIf="_editable">
-  <mat-slide-toggle formControlName="calculateFcf">Free Cashflow-Werte aus GuV-Werten berechnen</mat-slide-toggle>
+<mat-button-toggle-group id="model_toggle" #group="matButtonToggleGroup" formControlName="usedModel">
+  <mat-button-toggle id="arma" value="arma" checked="true" (change)="onModelChanged($event.value)">ARMA-Modell
+    </mat-button-toggle>
+  <mat-button-toggle id="brown" value="brown" (change)="onModelChanged($event.value)">Brown-Rozeff-Modell
+    </mat-button-toggle>
+</mat-button-toggle-group>
 </div>
 <div [formGroup]="formGroup" *ngIf="_editable">
-  <mat-slide-toggle formControlName="quarterly">Quartalsweise</mat-slide-toggle>
+  <mat-slide-toggle id="FCF_slide" formControlName="calculateFcf" [(disabled)]="slides_disabled" [(ngModel)]="fcf_slide">Free Cashflow-Werte aus GuV-Werten berechnen</mat-slide-toggle>
+</div>
+<div [formGroup]="formGroup" *ngIf="_editable">
+  <mat-slide-toggle id="quarter_slide" formControlName="quarterly" [(disabled)]="slides_disabled" [(ngModel)]="quarter_slide">Quartalsweise</mat-slide-toggle>
+</div>
+<div *ngIf="ownOrder">
+<div [formGroup]="formGroup" *ngIf="_editable">
+  <mat-slide-toggle id="ownOrder" formControlName="ownOrder" (change)="onOwnOrderChanged($event.checked)" [(ngModel)]="ownOrder_slide">Eigene Ordnung</mat-slide-toggle>
+</div>
+
+<div *ngIf="ownOrder_slide">
+<div [formGroup]="formGroup" *ngIf="_editable" >
+    <mat-form-field>
+        <input matInput id="armaP" formControlName="armaP" placeholder="p" type="text"/>
+      </mat-form-field>
+    <mat-form-field>
+        <input matInput id="armaQ" formControlName="armaQ" placeholder="q" type="text"/>
+    </mat-form-field>
+</div>
+</div>
 </div>
 <div class="scrollable" #scrollable>
   <table class="mat-table">

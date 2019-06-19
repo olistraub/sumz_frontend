@@ -60,6 +60,7 @@ export class CreateScenarioComponent implements OnInit {
       const end = this.formGroup3.controls.end.value;
       const quarterly = this.formGroup3.controls.quarterly.value;
 
+
       this.busy = true;
       const scenario: Scenario = {
         id: null,
@@ -68,6 +69,10 @@ export class CreateScenarioComponent implements OnInit {
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
         scenarioColor: this.color,
+        armaP: this.formGroup3.controls.armaP.value,
+        armaQ: this.formGroup3.controls.armaQ.value,
+        ownOrder: this.formGroup3.controls.ownOrder.value,
+        usedModel: this.formGroup3.controls.usedModel.value,
       };
       
       Object.keys(this.formGroup2.controls).forEach(param => scenario[param] = scenario[param] / 100);

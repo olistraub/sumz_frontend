@@ -5,6 +5,9 @@ import { Scenario } from '../api/scenario';
 import { Observable, Subscription, identity } from 'rxjs';
 import { accountingDataParams } from '../api/paramData';
 import { TimeSeriesMethodsService } from '../service/time-series-methods.service';
+import { HtmlParser } from '@angular/compiler';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatSlideToggle } from '@angular/material';
 
 @Component({
   selector: 'app-accounting-data',
@@ -22,6 +25,12 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   base: { year: number, quarter: number };
   start: { year: number, quarter: number }; // debounced values
   end: { year: number, quarter: number };
+  fcf_slide = false;
+  slides_disabled = false;
+  quarter_slide = false;
+  ownOrder_slide = false;
+  ownOrder = true;
+  usedModel = "arma";
   accountingDataParams = accountingDataParams;
   private scenarioSubscription: Subscription;
 
@@ -38,6 +47,30 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // unsubscribe from the @Input scenario to not execute another validation round when this component is destroyed.
     if (this.scenarioSubscription) { this.scenarioSubscription.unsubscribe(); }
+  }
+
+  onModelChanged(value){
+
+this.usedModel = value;
+if(value === "arma"){
+  
+  this.ownOrder = true;
+  this.slides_disabled = false;
+
+} else if(value === "brown") {
+ 
+  this.fcf_slide = true;
+  this.slides_disabled = true;
+  this.quarter_slide = true;
+  
+this.ownOrder = false;
+  
+}
+
+  }
+
+  onOwnOrderChanged(value){
+this.ownOrder_slide = value;
   }
 
   @Input() set editable(value: Boolean) {
@@ -65,6 +98,10 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
       Validators.required],
       quarterly: [(scenario && scenario.liabilities.timeSeries[0] && scenario.liabilities.timeSeries[0].date.quarter) || false,
       Validators.required],
+      ownOrder: [],
+      armaP:[],
+      armaQ: [],
+      usedModel: [],
     }, {
         validator: (formGroup: FormGroup) => {
           return this.validateForm(formGroup);
