@@ -4,7 +4,7 @@ import { from, Observable, ReplaySubject } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
 import { SumzAPI } from '../api/api';
 import { HttpClient } from './http-client';
-
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +15,7 @@ export class AuthenticationService {
 
   constructor(
     @Inject(HttpClient) private _apiClient: TypedAxiosInstance<SumzAPI>,
+    private router: Router,
   ) {
     // handle expired access_token
     this.addInterceptor();
@@ -83,6 +84,8 @@ export class AuthenticationService {
           // store new user details in local storage to keep user logged in
           localStorage.setItem('currentUser', JSON.stringify(response.data));
           this._user$.next();
+        }, (error) => {
+          this.router.navigate(['/login']);
         })
       );
   }
