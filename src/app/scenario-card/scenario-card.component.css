@@ -1,14 +1,40 @@
 mat-card {
     cursor: pointer;
     flex-grow: 1;
-    /* hier werden momentan alle Karten einheitlich gefärbt */
-    background-color: gold;
-    /* so könnte vllt die Farbe zufällig gewählt werden */
-    /* background-color: "rgb("+getRandomColor( 1, 250)+", "+getRandomColor( 1, 250)+", +"getRandomColor( 1, 250)+")"; */
-}
+   }
 
 mat-card-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+
+/* Farbzuweisung Ã¼ber Klassen */
+.red {
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+    color: white;
+}
+
+.black{
+    background-color: black;
+    color: white;
+}
+
+.white{
+    background-color: white;
+    
+}
+
+.blue{
+    background-color: blue;
+    color: white;
+}
+
+.yellow{
+    background-color: yellow;
 }
