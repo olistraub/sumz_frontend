@@ -10,7 +10,7 @@
               <input type="text" id="name" name="name" matInput placeholder="Name" required formControlName="scenarioName">
             </mat-form-field>
             <mat-form-field>
-              <textarea  matInput cdkTextareaAutosize placeholder="Beschreibung" formControlName="scenarioDescription" required></textarea>
+              <textarea  matInput cdkTextareaAutosize id="beschreibung" placeholder="Beschreibung" formControlName="scenarioDescription" required></textarea>
             </mat-form-field>
             <!-- Hier k�nnte sp�ter die Farbe bei erstellen der Kachel ausgew�hlt werden, es muss dann nur im Scenario direkt gespeichert werden -->
             <div name="farbauswahl">
@@ -42,7 +42,7 @@
           </mat-card-content>
           <mat-card-actions class="stepper-actions">
             <a mat-button routerLink="">Abbrechen</a>
-            <button mat-raised-button color="accent" matStepperNext>Weiter</button>
+            <button mat-raised-button color="accent" id="submit1" matStepperNext>Weiter</button>
           </mat-card-actions>
         </mat-card>
       </form>
@@ -53,7 +53,7 @@
           <mat-card-title>Umweltfaktoren</mat-card-title>
           <mat-card-content>
             <mat-form-field floatLabel="always" *ngFor="let paramEntry of Object.entries(environmentParams); trackBy: trackByName">
-              <input matInput type="number" appToDouble [placeholder]="paramEntry[1].displayName" [formControlName]="paramEntry[0]" required/>
+              <input matInput type="number" appToDouble [id]="paramEntry[1].id" [placeholder]="paramEntry[1].displayName" [formControlName]="paramEntry[0]" required/>
               <span matPrefix>% &nbsp;</span>
               <mat-error *ngIf="formGroup2.controls[paramEntry[0]].hasError('required')">
                 Dieses Feld wird
@@ -69,7 +69,7 @@
           </mat-card-content>
           <mat-card-actions class="stepper-actions">
             <button mat-button matStepperPrevious>Zurück</button>
-            <button mat-raised-button matStepperNext color="accent">Weiter</button>
+            <button mat-raised-button matStepperNext color="accent" id="submit2">Weiter</button>
           </mat-card-actions>
         </mat-card>
       </form>
@@ -84,7 +84,7 @@
           </mat-card-content>
           <mat-card-actions class="stepper-actions">
             <button mat-button matStepperPrevious [disabled]="busy">Zurück</button>
-            <button mat-raised-button matStepperNext color="accent" [disabled]="busy">Szenario anlegen</button>
+            <button mat-raised-button matStepperNext color="accent" id="submit3" [disabled]="busy">Szenario anlegen</button>
           </mat-card-actions>
         </mat-card>
       </form>
