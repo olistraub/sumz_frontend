@@ -39,7 +39,7 @@
             <div id="startyear-container" class="leveraged-field editable" *ngIf="_editable && element.value.year === start.year && (!formGroup.controls.quarterly.value || element.value.quarter === start.quarter)">
               <div [formGroup]="formGroup.controls.start" class="flex">
                 <mat-form-field class="table-input-right">
-                  <input type="number" matInput formControlName="year" required placeholder="Startjahr" (input)="checkMaxIntegrity(formGroup.controls.base, formGroup.controls.start)">
+                  <input type="number" matInput formControlName="year" onkeydown="return false" required placeholder="Startjahr" (input)="checkMaxIntegrity(formGroup.controls.base, formGroup.controls.start)">
                 </mat-form-field>
                 <mat-form-field class="small-field" *ngIf="formGroup.controls.quarterly.value" (input)="checkMaxIntegrity(formGroup.controls.base, formGroup.controls.start)">
                   <mat-select placeholder="Quartal" formControlName="quarter">
@@ -59,7 +59,7 @@
               </span>
               <div [formGroup]="formGroup.controls.base" class="flex">
                 <mat-form-field class="table-input-right" *ngIf="_editable">
-                  <input type="number" matInput formControlName="year" required placeholder="Basisjahr" (input)="checkMaxIntegrity(formGroup.controls.end, formGroup.controls.base, 2);checkMinIntegrity(formGroup.controls.start, formGroup.controls.base)">
+                  <input type="number" matInput formControlName="year" onkeydown="return false" required placeholder="Basisjahr" (input)="checkMaxIntegrity(formGroup.controls.end, formGroup.controls.base, 2);checkMinIntegrity(formGroup.controls.start, formGroup.controls.base)">
                 </mat-form-field>
                 <mat-form-field class="small-field" *ngIf="formGroup.controls.quarterly.value && _editable">
                   <mat-select placeholder="Quartal" formControlName="quarter" (input)="checkMaxIntegrity(formGroup.controls.end, formGroup.controls.base, 2);checkMinIntegrity(formGroup.controls.start, formGroup.controls.base)">
@@ -75,7 +75,7 @@
             <div id="endyear-container" class="leveraged-field" [class.editable]="_editable" *ngIf="element.value.year === end.year && (!formGroup.controls.quarterly.value || element.value.quarter === end.quarter)">
               <div [formGroup]="formGroup.controls.end" class="flex" *ngIf="_editable">
                 <mat-form-field class="table-input-right" (focusout)="updateTable()">
-                  <input type="number" matInput formControlName="year" required placeholder="Endjahr" (input)="checkMinIntegrity(formGroup.controls.base, formGroup.controls.end, 2)">
+                  <input type="number" matInput onkeydown="return false" formControlName="year" required placeholder="Endjahr" (input)="checkMinIntegrity(formGroup.controls.base, formGroup.controls.end, 2)">
                 </mat-form-field>
                 <mat-form-field class="small-field" *ngIf="formGroup.controls.quarterly.value">
                   <mat-select placeholder="Quartal" formControlName="quarter" (input)="checkMinIntegrity(formGroup.controls.base, formGroup.controls.end, 2)">
