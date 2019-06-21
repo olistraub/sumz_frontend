@@ -115,3 +115,37 @@ mat-progress-bar {
 .bold {
   font-weight: bold;
 }
+
+#red{
+  background-color: red;
+}
+
+#green{
+  background-color: green;
+}
+
+#black{
+  background-color: black;
+}
+
+#white{
+  background-color: white;
+}
+
+#blue{
+  background-color: blue;
+}
+
+#yellow{
+  background-color: yellow;
+}
+
+.mat-button-toggle{
+
+  border: 0.3em solid white;
+}
+
+.mat-button-toggle-checked{
+  border: 0.3em solid #263238;
+}
+

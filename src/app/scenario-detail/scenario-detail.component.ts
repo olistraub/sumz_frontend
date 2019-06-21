@@ -85,6 +85,7 @@ export class ScenarioDetailComponent implements OnInit {
   environmentParams = environmentParams; // fix scope issues in view
   Object = Object;
   busy = false;
+  color: string;
 
   /* edit mode */
   editable
@@ -108,7 +109,8 @@ export class ScenarioDetailComponent implements OnInit {
     private _timeSeriesMethodsService: TimeSeriesMethodsService) { }
 
   ngOnInit() {
-	this.editable = false;
+  
+  this.editable = false;
 	if (this._scenariosService.help == true) {
 		this.editable = true;
 		this._scenariosService.subsVar = this._scenariosService.invokeOtherComponentFuction.subscribe(() => {
@@ -187,6 +189,7 @@ export class ScenarioDetailComponent implements OnInit {
 
   initData() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
+      this.color = currentScenario.scenarioColor;
       this.formGroup.controls.scenarioName.setValue(currentScenario.scenarioName);
       this.formGroup.controls.scenarioDescription.setValue(currentScenario.scenarioDescription);
       Object.keys(environmentParams).forEach(key => this.formGroup.controls[key].setValue(currentScenario[key] * 100));
@@ -224,7 +227,7 @@ export class ScenarioDetailComponent implements OnInit {
 
   saveScenario() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
-
+      currentScenario.scenarioColor = this.color;
       currentScenario.scenarioName = this.formGroup.controls.scenarioName.value;
       currentScenario.scenarioDescription = this.formGroup.controls.scenarioDescription.value;
       Object.keys(environmentParams).forEach(key => currentScenario[key] = this.formGroup.controls[key].value / 100);
@@ -323,5 +326,9 @@ export class ScenarioDetailComponent implements OnInit {
 
   trackByName([name, config]) {
     return name;
+  }
+ 
+  onColorChanged(event){
+    this.color = event.source.id;
   }
 }
