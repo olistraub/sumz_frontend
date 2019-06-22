@@ -75,7 +75,7 @@ import { Wrapper } from '../api/wrapper';
 })
 
 export class ScenarioDetailComponent implements OnInit {
-@Input() scenario: Wrapper<Scenario>;
+
   forScenario$: Observable<Scenario>;
   forConfig$: Observable<RemoteConfig>;
   formGroup: FormGroup;
@@ -212,21 +212,26 @@ export class ScenarioDetailComponent implements OnInit {
   }
 
   exportScenario() {
-    this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: this.scenario } });
-  }
+    this.forScenario$.pipe(first()).subscribe(currentScenario => {
+    this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: currentScenario } });
+  });
+}
 
   removeScenario() {
-    this._dialog.open(DeleteDialogComponent, { data: { scenario: this.scenario } })
+    this.forScenario$.pipe(first()).subscribe(currentScenario => {
+    this._dialog.open(DeleteDialogComponent, { data: { scenario: currentScenario } })
       .afterClosed().subscribe((result) => {
         if (result === true) {
-          this._scenariosService.removeScenario(this.scenario.valueOf())
+          this._scenariosService.removeScenario(currentScenario)
             .subscribe(
-              removed => this._alertService.success(`Das Szenario "${this.scenario.valueOf().scenarioName}" wurde erfolgreich gelöscht`),
-              error => this._alertService.error(`Das Szenario "${this.scenario.valueOf().scenarioName}" konnte nicht gelöscht werden
+              removed => this._alertService.success(`Das Szenario "${currentScenario.scenarioName}" wurde erfolgreich gelöscht`),
+              error => this._alertService.error(`Das Szenario "${currentScenario.scenarioName}" konnte nicht gelöscht werden
                  (${error.message})`)
             );
         }
       });
+      this._router.navigate(['/']);
+    });
   }
 
   saveScenario() {
