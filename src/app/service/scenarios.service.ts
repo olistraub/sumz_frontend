@@ -105,7 +105,7 @@ export class ScenariosService {
       switchMap(response => of(response.data))
     );
   }
-
+  //EventEmitter Helfer für Scenario bearbeiten aus ScenarioCard-Menue
   invokeOtherComponentFuction = new EventEmitter();
   subsVar: Subscription;
   help: boolean;

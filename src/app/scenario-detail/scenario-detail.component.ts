@@ -109,17 +109,7 @@ export class ScenarioDetailComponent implements OnInit {
     private _timeSeriesMethodsService: TimeSeriesMethodsService) { }
 
   ngOnInit() {
-  
-  this.editable = false;
-	if (this._scenariosService.help == true) {
-		this.editable = true;
-		this._scenariosService.subsVar = this._scenariosService.invokeOtherComponentFuction.subscribe(() => {
-			this.setEditable(this.editable);
-		});
-	}
-
-	this._scenariosService.help = false;
-    
+     
     this.forScenarioId$ = this._route.paramMap.pipe(
       switchMap(params => {
         return of(Number.parseInt(params.get('id')));
@@ -185,7 +175,21 @@ export class ScenarioDetailComponent implements OnInit {
         }],
       });
     });
+    //Subcriber für das Scenario bearbeiten Event aus scenario-card
+  this.editable = false;
+  
+  if (this._scenariosService.help) {
+    this.editable = true;
+		this._scenariosService.subsVar = this._scenariosService.invokeOtherComponentFuction.subscribe(
+      () => {
+			this.setEditable(true);
+		  });
+  this.setEditable(true);
   }
+
+	this._scenariosService.help = false;
+  
+}
 
   initData() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
