@@ -25,9 +25,9 @@
   <mat-accordion multi="true" class="headers-align" [class.busy]="busy">
     <mat-expansion-panel expanded="true" hideToggle="false" [formGroup]="formGroup">
       <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Daten
+      <mat-expansion-panel-header >
+        <mat-panel-title id="{{(forScenario$ | async)?.scenarioColor}}" >
+          
         </mat-panel-title>
         <mat-panel-description>
           Kopfdaten des Szenarios
@@ -47,12 +47,27 @@
           <mat-form-field floatLabel="always">
             <textarea matInput cdkTextareaAutosize placeholder="Beschreibung" formControlName="scenarioDescription"></textarea>
           </mat-form-field>
+          <div name="farbauswahl" *ngIf="editable">
+
+            <mat-button-toggle-group #group="matButtonToggleGroup" dis>
+                <mat-button-toggle id="red" value="" checked="true" (change)="onColorChanged($event)">
+                  </mat-button-toggle>
+                <mat-button-toggle id="green" value=""  (change)="onColorChanged($event)">
+                  </mat-button-toggle>
+                <mat-button-toggle id="black" value="" (change)="onColorChanged($event)">
+                  </mat-button-toggle>
+                <mat-button-toggle id="blue" value="" (change)="onColorChanged($event)">
+                  </mat-button-toggle>
+                <mat-button-toggle id="yellow" value="" (change)="onColorChanged($event)">
+                  </mat-button-toggle>
+              </mat-button-toggle-group>
+          </div>
         </div>
         <mat-divider vertical="true"></mat-divider>
         <div>
           <h3>Umweltfaktoren</h3>
           <mat-form-field floatLabel="always" *ngFor="let paramEntry of Object.entries(environmentParams); trackBy: trackByName">
-            <input matInput type="text" appToDouble [placeholder]="paramEntry[1].displayName" [formControlName]="paramEntry[0]" />
+            <input matInput type="number" appToDouble [placeholder]="paramEntry[1].displayName" [formControlName]="paramEntry[0]" />
             <span matPrefix>% &nbsp;</span>
             <mat-error *ngIf="formGroup.controls[paramEntry[0]].hasError('required')">
               Dieses Feld wird

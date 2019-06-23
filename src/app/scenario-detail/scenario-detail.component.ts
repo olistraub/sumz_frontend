@@ -75,7 +75,7 @@ import { Wrapper } from '../api/wrapper';
 })
 
 export class ScenarioDetailComponent implements OnInit {
-@Input() scenario: Wrapper<Scenario>;
+
   forScenario$: Observable<Scenario>;
   forConfig$: Observable<RemoteConfig>;
   formGroup: FormGroup;
@@ -85,6 +85,7 @@ export class ScenarioDetailComponent implements OnInit {
   environmentParams = environmentParams; // fix scope issues in view
   Object = Object;
   busy = false;
+  color: string;
 
   /* edit mode */
   editable
@@ -108,16 +109,7 @@ export class ScenarioDetailComponent implements OnInit {
     private _timeSeriesMethodsService: TimeSeriesMethodsService) { }
 
   ngOnInit() {
-	this.editable = false;
-	if (this._scenariosService.help == true) {
-		this.editable = true;
-		this._scenariosService.subsVar = this._scenariosService.invokeOtherComponentFuction.subscribe(() => {
-			this.setEditable(this.editable);
-		});
-	}
-
-	this._scenariosService.help = false;
-    
+     
     this.forScenarioId$ = this._route.paramMap.pipe(
       switchMap(params => {
         return of(Number.parseInt(params.get('id')));
@@ -183,10 +175,25 @@ export class ScenarioDetailComponent implements OnInit {
         }],
       });
     });
+    //Subcriber für das Scenario bearbeiten Event aus scenario-card
+  this.editable = false;
+  
+  if (this._scenariosService.help) {
+    this.editable = true;
+		this._scenariosService.subsVar = this._scenariosService.invokeOtherComponentFuction.subscribe(
+      () => {
+			this.setEditable(true);
+		  });
+  this.setEditable(true);
   }
+
+	this._scenariosService.help = false;
+  
+}
 
   initData() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
+      this.color = currentScenario.scenarioColor;
       this.formGroup.controls.scenarioName.setValue(currentScenario.scenarioName);
       this.formGroup.controls.scenarioDescription.setValue(currentScenario.scenarioDescription);
       Object.keys(environmentParams).forEach(key => this.formGroup.controls[key].setValue(currentScenario[key] * 100));
@@ -205,26 +212,31 @@ export class ScenarioDetailComponent implements OnInit {
   }
 
   exportScenario() {
-    this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: this.scenario } });
-  }
+    this.forScenario$.pipe(first()).subscribe(currentScenario => {
+    this._bottomSheet.open(ExportScenarioComponent, { data: { scenario: currentScenario } });
+  });
+}
 
   removeScenario() {
-    this._dialog.open(DeleteDialogComponent, { data: { scenario: this.scenario } })
+    this.forScenario$.pipe(first()).subscribe(currentScenario => {
+    this._dialog.open(DeleteDialogComponent, { data: { scenario: currentScenario } })
       .afterClosed().subscribe((result) => {
         if (result === true) {
-          this._scenariosService.removeScenario(this.scenario.valueOf())
+          this._scenariosService.removeScenario(currentScenario)
             .subscribe(
-              removed => this._alertService.success(`Das Szenario "${this.scenario.valueOf().scenarioName}" wurde erfolgreich gelöscht`),
-              error => this._alertService.error(`Das Szenario "${this.scenario.valueOf().scenarioName}" konnte nicht gelöscht werden
+              removed => this._alertService.success(`Das Szenario "${currentScenario.scenarioName}" wurde erfolgreich gelöscht`),
+              error => this._alertService.error(`Das Szenario "${currentScenario.scenarioName}" konnte nicht gelöscht werden
                  (${error.message})`)
             );
         }
       });
+      this._router.navigate(['/']);
+    });
   }
 
   saveScenario() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
-
+      currentScenario.scenarioColor = this.color;
       currentScenario.scenarioName = this.formGroup.controls.scenarioName.value;
       currentScenario.scenarioDescription = this.formGroup.controls.scenarioDescription.value;
       Object.keys(environmentParams).forEach(key => currentScenario[key] = this.formGroup.controls[key].value / 100);
@@ -323,5 +335,9 @@ export class ScenarioDetailComponent implements OnInit {
 
   trackByName([name, config]) {
     return name;
+  }
+ 
+  onColorChanged(event){
+    this.color = event.source.id;
   }
 }
