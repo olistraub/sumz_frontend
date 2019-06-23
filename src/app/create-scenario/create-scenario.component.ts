@@ -61,6 +61,28 @@ export class CreateScenarioComponent implements OnInit {
       const end = this.formGroup3.controls.end.value;
       const quarterly = this.formGroup3.controls.quarterly.value;
 
+      let order: number[];
+      let seasonalOrder: number[];
+      let p = 0;
+      let q = 0;
+      let usedModel = this.formGroup3.controls.usedModel.value;
+
+      if (usedModel === null){
+        usedModel = "arma";
+      }
+
+      if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
+        p = this.formGroup3.controls.armaP.value;
+        q = this.formGroup3.controls.armaQ.value;
+      }
+
+      if (usedModel === "arma"){
+        order = [p,0,q];
+        seasonalOrder = [0,0,0,0];
+      }else if(usedModel === "brown"){
+        order = [1,0,0];
+        seasonalOrder = [0,1,1,4];
+      }
 
       this.busy = true;
       const scenario: Scenario = {
@@ -70,10 +92,11 @@ export class CreateScenarioComponent implements OnInit {
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
         scenarioColor: this.color,
-        armaP: this.formGroup3.controls.armaP.value,
-        armaQ: this.formGroup3.controls.armaQ.value,
-        ownOrder: this.formGroup3.controls.ownOrder.value,
-        usedModel: this.formGroup3.controls.usedModel.value,
+        order: order,
+        seasonalOrder: seasonalOrder,
+        //seasonal: this.formGroup3.controls.armaQ.value,
+        //ownOrder: this.formGroup3.controls.ownOrder.value,
+        //usedModel: this.formGroup3.controls.usedModel.value,
       };
       
       Object.keys(this.formGroup2.controls).forEach(param => scenario[param] = scenario[param] / 100);

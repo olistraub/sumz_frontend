@@ -26,7 +26,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   start: { year: number, quarter: number }; // debounced values
   end: { year: number, quarter: number };
   fcf_slide = false;
-  slides_disabled = false;
+  quarter_slide_disabled = false;
   quarter_slide = false;
   ownOrder_slide = false;
   ownOrder = true;
@@ -55,12 +55,11 @@ this.usedModel = value;
 if(value === "arma"){
   
   this.ownOrder = true;
-  this.slides_disabled = false;
+  this.quarter_slide_disabled = false;
 
 } else if(value === "brown") {
- 
-  this.fcf_slide = true;
-  this.slides_disabled = true;
+
+  this.quarter_slide_disabled = true;
   this.quarter_slide = true;
   
 this.ownOrder = false;
