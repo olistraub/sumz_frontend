@@ -8,6 +8,7 @@ import { SelectScenarioComponent } from '../select-scenario/select-scenario.comp
 import { AlertService } from '../service/alert.service';
 import { ScenariosService } from '../service/scenarios.service';
 import { TimeSeriesMethodsService } from '../service/time-series-methods.service';
+import { HttpErrorResponse} from '@angular/common/http'
 
 @Component({
   selector: 'app-create-scenario',
@@ -94,17 +95,16 @@ export class CreateScenarioComponent implements OnInit {
           };
         }
       }
-      
       this._scenariosService.addScenario(scenario)
-        .subscribe(
-          (createdScenario) => {
-            this._alertService.success('Das Szenario wurde erfolgreich erstellt');
-            this._router.navigate(['/scenario', createdScenario.id]);
-          },
-          (error) => {
-            this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.statusText})`);
-            this.busy = false;
-          },
+      .subscribe(
+        (createdScenario) => {
+          this._alertService.success('Das Szenario wurde erfolgreich erstellt');
+          this._router.navigate(['/scenario', createdScenario.id]);
+        },
+        (error) => {
+          this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.response.data.message})`);
+          this.busy = false;
+        },
           () => this.busy = false
         );
     }
