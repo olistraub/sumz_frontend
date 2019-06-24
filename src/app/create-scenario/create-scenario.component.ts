@@ -115,8 +115,8 @@ export class CreateScenarioComponent implements OnInit {
                 && this._timeSeriesMethodsService.checkVisibility(dataPoint, paramFormGroup.value.isHistoric, quarterly, base, end,
                   paramDefinition.shiftDeterministic))
             ),
-            order: [1,2,3],
-            seasonalOrder: [1,2,3,4],
+            order: order,
+            seasonalOrder: seasonalOrder,
           };
         }
       }
