@@ -92,8 +92,8 @@ export class CreateScenarioComponent implements OnInit {
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
         scenarioColor: this.color,
-        order: order,
-        seasonalOrder: seasonalOrder,
+        //order: order,
+        //seasonalOrder: seasonalOrder,
         //seasonal: this.formGroup3.controls.armaQ.value,
         //ownOrder: this.formGroup3.controls.ownOrder.value,
         //usedModel: this.formGroup3.controls.usedModel.value,
@@ -115,6 +115,8 @@ export class CreateScenarioComponent implements OnInit {
                 && this._timeSeriesMethodsService.checkVisibility(dataPoint, paramFormGroup.value.isHistoric, quarterly, base, end,
                   paramDefinition.shiftDeterministic))
             ),
+            order: [1,2,3],
+            seasonalOrder: [1,2,3,4],
           };
         }
       }

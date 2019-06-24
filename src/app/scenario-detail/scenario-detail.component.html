@@ -2,21 +2,21 @@
   <h1>
     {{(forScenario$ | async)?.scenarioName}}
     <div [@toggleEditAnimation]="editable">
-      <button type="button" mat-raised-button color="accent" *ngIf="!editable" (click)="setEditable(true)"class="space-right">
+      <button id="Sedit" type="button" mat-raised-button color="accent" *ngIf="!editable" (click)="setEditable(true)"class="space-right">
         Szenario bearbeiten
       </button>
-      <button type="button" mat-button color="primary" *ngIf="editable" (click)="setEditable(false)" class="space-right" [disabled]="busy">
+      <button id="Signorechanges"type="button" mat-button color="primary" *ngIf="editable" (click)="setEditable(false)" class="space-right" [disabled]="busy">
         Änderungen Verwerfen
       </button>
-      <button type="button" mat-raised-button color="accent" *ngIf="editable" (click)="setEditable(false, true)" [disabled]="busy">
+      <button id="Ssave" type="button" mat-raised-button color="accent" *ngIf="editable" (click)="setEditable(false, true)" [disabled]="busy">
         Speichern
 	  </button>
 
-	  <button type="button" mat-raised-button color="accent" *ngIf="!editable"  class="space-right" (click)= removeScenario()>
+	  <button id="Sdelete" type="button" mat-raised-button color="accent" *ngIf="!editable"  class="space-right" (click)= removeScenario()>
         Szenario löschen
 	  </button>
 	  
-	  <button type="button" mat-raised-button color="accent" *ngIf="!editable" (click)= exportScenario() >
+	  <button id="Sexport" type="button" mat-raised-button color="accent" *ngIf="!editable" (click)= exportScenario() >
         Szenario exportieren
       </button>
     </div>
@@ -110,10 +110,10 @@
       </mat-expansion-panel-header>
 
       <div class="selection">
-        <mat-checkbox class="margin" formControlName="cvd">CVD</mat-checkbox>
-        <mat-checkbox class="margin" formControlName="apv">APV</mat-checkbox>
-        <mat-checkbox class="margin" formControlName="fcf">FCF</mat-checkbox>
-        <mat-checkbox class="margin" formControlName="fte">FTE</mat-checkbox>
+        <mat-checkbox id="cbCVD" class="margin" formControlName="cvd">CVD</mat-checkbox>
+        <mat-checkbox id="cbAPV" class="margin" formControlName="apv">APV</mat-checkbox>
+        <mat-checkbox id="cbFCF" class="margin" formControlName="fcf">FCF</mat-checkbox>
+        <mat-checkbox id="cbFTE" class="margin" formControlName="fte">FTE</mat-checkbox>
       </div>
 
       <div class="flex-container">

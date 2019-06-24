@@ -32,6 +32,8 @@ export class Scenario {
 export class AccountingFigure {
     isHistoric: boolean;
     timeSeries: DataPoint[];
+    order: number[];
+    seasonalOrder: number[];
 }
 
 export class DataPoint {
