@@ -127,7 +127,16 @@ export class CreateScenarioComponent implements OnInit {
           this._router.navigate(['/scenario', createdScenario.id]);
         },
         (error) => {
-          this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.response.data.message})`);
+
+          console.log(error.response.status);
+          console.log(error);
+
+          if ((error.response.status >= 400)  && (error.response.status < 500) && (error.response.data.errors != null) ) {
+            this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.response.data.errors[1].defaultMessage})`);
+          }
+          else {
+            this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.response.data.message})`);
+          }
           this.busy = false;
         },
           () => this.busy = false
