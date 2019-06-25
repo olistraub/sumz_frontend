@@ -31,6 +31,7 @@ import { ToDoubleDirective } from './to-double.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { ExportScenarioComponent } from './export-scenario/export-scenario.component';
 import { ImportScenarioComponent } from './import-scenario/import-scenario.component';
+import { ExcelService } from './service/excel.export.service';
 
 @NgModule({
   declarations: [
@@ -65,13 +66,15 @@ import { ImportScenarioComponent } from './import-scenario/import-scenario.compo
     ChartModule,
     HttpClientModule,
   ],
-  providers: [
+  providers: 
+  [
     environment.emergencyDemo
       ? { provide: ScenariosService, useClass: ScenariosServiceMock }
       : ScenariosService,
-    AuthGuard,
+    AuthGuard,ExcelService
   ],
   bootstrap: [AppComponent],
   entryComponents: [SelectScenarioComponent, DeleteDialogComponent, AlertComponent, ExportScenarioComponent, ImportScenarioComponent],
+
 })
 export class AppModule { }
