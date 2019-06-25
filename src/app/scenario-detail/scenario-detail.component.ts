@@ -249,6 +249,35 @@ export class ScenarioDetailComponent implements OnInit {
       currentScenario.stochastic = false;
       currentScenario.periods = this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly);
 
+      let order: number[];
+      let seasonalOrder: number[];
+      let p = 0;
+      let q = 0;
+      let usedModel = this.accountingDataFormGroup.controls.usedModel.value;
+
+      if (usedModel === null){
+        usedModel = "arma";
+      }
+      
+          if (this.accountingDataFormGroup.controls.armaP.value !== null && this.accountingDataFormGroup.controls.armaQ.value !== null){
+          p = this.accountingDataFormGroup.controls.armaP.value;
+          q = this.accountingDataFormGroup.controls.armaQ.value;
+        }
+
+        if (usedModel === "arma"){
+            if (this.accountingDataFormGroup.controls.ownOrder.value){
+              order = [p,0,q];
+              seasonalOrder = [0,0,0,0];
+            }else{
+              order = [0,0,0];
+              seasonalOrder = [0,0,0,0];
+            }
+          
+        }else if(usedModel === "brown"){
+          order = [1,0,0];
+          seasonalOrder = [0,1,1,4];
+        }
+
       for (const [param, paramDefinition] of this.accountingDataParams) {
         if (this._timeSeriesMethodsService.shouldDisplayAccountingDataParam(
           this.accountingDataParams, this.accountingDataFormGroup.value.calculateFcf, param)) {
@@ -269,6 +298,8 @@ export class ScenarioDetailComponent implements OnInit {
                   end,
                   paramDefinition.shiftDeterministic))
             ),
+            order: order,
+            seasonalOrder: seasonalOrder,
           };
         }
       }
