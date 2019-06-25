@@ -71,18 +71,28 @@ export class CreateScenarioComponent implements OnInit {
         usedModel = "arma";
       }
 
-      if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
-        p = this.formGroup3.controls.armaP.value;
-        q = this.formGroup3.controls.armaQ.value;
-      }
+      
+          if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
+          p = this.formGroup3.controls.armaP.value;
+          q = this.formGroup3.controls.armaQ.value;
+        }
 
-      if (usedModel === "arma"){
-        order = [p,0,q];
-        seasonalOrder = [0,0,0,0];
-      }else if(usedModel === "brown"){
-        order = [1,0,0];
-        seasonalOrder = [0,1,1,4];
-      }
+        if (usedModel === "arma"){
+            if (this.formGroup3.controls.ownOrder.value){
+              order = [p,0,q];
+              seasonalOrder = [0,0,0,0];
+            }else{
+              order = null;
+              seasonalOrder = null;
+            }
+          
+        }else if(usedModel === "brown"){
+          order = [1,0,0];
+          seasonalOrder = [0,1,1,4];
+        }
+      
+
+      
 
       this.busy = true;
       const scenario: Scenario = {
