@@ -12,6 +12,6 @@
 <div id="spinner" *ngIf="!(scenarios$ | async)" class="mat-elevation-z6" [@spinnerAnimation]>
 <mat-spinner diameter="36"></mat-spinner>
 </div>
-<a mat-fab color="accent" class="fab-bottom-right" matTooltip="Neues Szenario erstellen" matTooltipShowDelay="500" routerLink="create">
+<a mat-fab id="newSzenario"color="accent" class="fab-bottom-right" matTooltip="Neues Szenario erstellen" matTooltipShowDelay="500" routerLink="create">
   <mat-icon aria-label="Neues Szenario erstellen">add</mat-icon>
 </a>

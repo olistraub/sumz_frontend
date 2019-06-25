@@ -8,6 +8,7 @@ import { SelectScenarioComponent } from '../select-scenario/select-scenario.comp
 import { AlertService } from '../service/alert.service';
 import { ScenariosService } from '../service/scenarios.service';
 import { TimeSeriesMethodsService } from '../service/time-series-methods.service';
+import { HttpErrorResponse} from '@angular/common/http'
 
 @Component({
   selector: 'app-create-scenario',
@@ -60,7 +61,35 @@ export class CreateScenarioComponent implements OnInit {
       const end = this.formGroup3.controls.end.value;
       const quarterly = this.formGroup3.controls.quarterly.value;
 
+      let order: number[];
+      let seasonalOrder: number[];
+      let p = 0;
+      let q = 0;
+      let usedModel = this.formGroup3.controls.usedModel.value;
 
+      if (usedModel === null){
+        usedModel = "arma";
+      }
+      
+        if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
+          p = this.formGroup3.controls.armaP.value;
+          q = this.formGroup3.controls.armaQ.value;
+        }
+
+        if (usedModel === "arma"){
+            if (this.formGroup3.controls.ownOrder.value){
+              order = [p,0,q];
+              seasonalOrder = [0,0,0,0];
+            }else{
+              order = [0,0,0];
+              seasonalOrder = [0,0,0,0];
+            }
+          
+        }else if(usedModel === "brown"){
+          order = [1,0,0];
+          seasonalOrder = [0,1,1,4];
+        }
+      
       this.busy = true;
       const scenario: Scenario = {
         id: null,
@@ -69,10 +98,6 @@ export class CreateScenarioComponent implements OnInit {
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
         scenarioColor: this.color,
-        armaP: this.formGroup3.controls.armaP.value,
-        armaQ: this.formGroup3.controls.armaQ.value,
-        ownOrder: this.formGroup3.controls.ownOrder.value,
-        usedModel: this.formGroup3.controls.usedModel.value,
       };
       
       Object.keys(this.formGroup2.controls).forEach(param => scenario[param] = scenario[param] / 100);
@@ -91,20 +116,30 @@ export class CreateScenarioComponent implements OnInit {
                 && this._timeSeriesMethodsService.checkVisibility(dataPoint, paramFormGroup.value.isHistoric, quarterly, base, end,
                   paramDefinition.shiftDeterministic))
             ),
+            order: order,
+            seasonalOrder: seasonalOrder,
           };
         }
       }
-      
       this._scenariosService.addScenario(scenario)
-        .subscribe(
-          (createdScenario) => {
-            this._alertService.success('Das Szenario wurde erfolgreich erstellt');
-            this._router.navigate(['/scenario', createdScenario.id]);
-          },
-          (error) => {
-            this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.statusText})`);
-            this.busy = false;
-          },
+      .subscribe(
+        (createdScenario) => {
+          this._alertService.success('Das Szenario wurde erfolgreich erstellt');
+          this._router.navigate(['/scenario', createdScenario.id]);
+        },
+        (error) => {
+
+          console.log(error.response.status);
+          console.log(error);
+
+          if ((error.response.status >= 400)  && (error.response.status < 500) && (error.response.data.errors != null) ) {
+            this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.response.data.errors[1].defaultMessage})`);
+          }
+          else {
+            this._alertService.error(`Das Szenario konnte nicht erstellt werden. (${error.response.data.message})`);
+          }
+          this.busy = false;
+        },
           () => this.busy = false
         );
     }

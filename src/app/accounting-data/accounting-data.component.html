@@ -7,10 +7,10 @@
 </mat-button-toggle-group>
 </div>
 <div [formGroup]="formGroup" *ngIf="_editable">
-  <mat-slide-toggle id="FCF_slide" formControlName="calculateFcf" [(disabled)]="slides_disabled" [(ngModel)]="fcf_slide">Free Cashflow-Werte aus GuV-Werten berechnen</mat-slide-toggle>
+  <mat-slide-toggle id="FCF_slide" formControlName="calculateFcf" [(ngModel)]="fcf_slide">Free Cashflow-Werte aus GuV-Werten berechnen</mat-slide-toggle>
 </div>
 <div [formGroup]="formGroup" *ngIf="_editable">
-  <mat-slide-toggle id="quarter_slide" formControlName="quarterly" [(disabled)]="slides_disabled" [(ngModel)]="quarter_slide">Quartalsweise</mat-slide-toggle>
+  <mat-slide-toggle id="quarter_slide" formControlName="quarterly" [(disabled)]="quarter_slide_disabled" [(ngModel)]="quarter_slide">Quartalsweise</mat-slide-toggle>
 </div>
 <div *ngIf="ownOrder">
 <div [formGroup]="formGroup" *ngIf="_editable">

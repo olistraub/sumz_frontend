@@ -1,10 +1,11 @@
 import { Inject, Injectable, EventEmitter } from '@angular/core';
-import { TypedAxiosInstance } from 'restyped-axios';
-import { combineLatest, from, Observable, of, ReplaySubject, throwError, zip, Subscription } from 'rxjs';
-import { debounceTime, filter, flatMap, retry, switchMap } from 'rxjs/operators';
+import TypedAxios, { TypedAxiosInstance } from 'restyped-axios';
+import { combineLatest, from, Observable, of, ReplaySubject, throwError, zip, Subscription, EMPTY, empty } from 'rxjs';
+import { debounceTime, filter, flatMap, retry, switchMap, catchError } from 'rxjs/operators';
 import { SumzAPI } from '../api/api';
 import { Scenario } from '../api/scenario';
 import { HttpClient } from './http-client';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,7 @@ export class ScenariosService {
   }
 
   addScenario(scenario: Scenario) {
+    console.log("Post");
     return from(this._apiClient.request({
       url: '/scenarios',
       data: scenario,
@@ -67,6 +69,7 @@ export class ScenariosService {
         return of(addedScenario);
       })
     );
+  
   }
 
   updateScenario(scenario: Scenario) {

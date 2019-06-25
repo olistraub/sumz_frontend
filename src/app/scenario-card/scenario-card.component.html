@@ -1,14 +1,14 @@
 <mat-card id="{{scenario.valueOf().id}}"(mouseover)="hovered = true" (mouseout)="hovered = false" [class.mat-elevation-z8]="hovered" class= "mat-ripple mat-card {{scenario.valueOf().scenarioColor}}" matRippleColor="rgba(0,0,0,0.05)" >
   <mat-card-title>
     {{scenario.valueOf().scenarioName}}
-    <button type="button" mat-icon-button [matMenuTriggerFor]="scenarioMenu" (click)="toggleScenarioMenu($event)" (mousedown)="$event.stopPropagation()">
+    <button id="{{scenario.valueOf().id+'menu'}}" type="button" mat-icon-button [matMenuTriggerFor]="scenarioMenu" (click)="toggleScenarioMenu($event)" (mousedown)="$event.stopPropagation()">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-card-title>
   <mat-menu #scenarioMenu="matMenu">
-	  <button mat-menu-item (click)="changeScenario()">Bearbeiten</button>
-    <button mat-menu-item (click)="exportScenario()">Exportieren</button>
-    <button mat-menu-item (click)="removeScenario()">Löschen</button>
+	  <button mat-menu-item id="edit" (click)="changeScenario()">Bearbeiten</button>
+    <button mat-menu-item id="export" (click)="exportScenario()">Exportieren</button>
+    <button mat-menu-item id="delete" (click)="removeScenario()">Löschen</button>
   </mat-menu>
   <mat-card-subtitle class="mat-card-subtitle {{scenario.valueOf().scenarioColor}}">
       {{scenario.valueOf().scenarioDescription}}
