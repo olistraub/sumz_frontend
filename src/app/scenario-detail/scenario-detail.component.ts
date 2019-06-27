@@ -269,8 +269,8 @@ export class ScenarioDetailComponent implements OnInit {
               order = [p,0,q];
               seasonalOrder = [0,0,0,0];
             }else{
-              order = [0,0,0];
-              seasonalOrder = [0,0,0,0];
+              order = null;
+              seasonalOrder = null;
             }
           
         }else if(usedModel === "brown"){
