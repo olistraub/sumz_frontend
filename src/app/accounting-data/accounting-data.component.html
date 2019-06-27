@@ -16,17 +16,6 @@
 <div [formGroup]="formGroup" *ngIf="_editable">
   <mat-slide-toggle id="ownOrder" formControlName="ownOrder" (change)="onOwnOrderChanged($event.checked)" [(ngModel)]="ownOrder_slide">Eigene Ordnung</mat-slide-toggle>
 </div>
-
-<div *ngIf="ownOrder_slide">
-<div [formGroup]="formGroup" *ngIf="_editable" >
-    <mat-form-field>
-        <input matInput id="armaP" formControlName="armaP" placeholder="p" type="text"/>
-      </mat-form-field>
-    <mat-form-field>
-        <input matInput id="armaQ" formControlName="armaQ" placeholder="q" type="text"/>
-    </mat-form-field>
-</div>
-</div>
 </div>
 <div class="scrollable" #scrollable>
   <table class="mat-table">
@@ -102,7 +91,17 @@
             {{accountingDataParams.get(ctrl).displayName}}
             <mat-checkbox formControlName="isHistoric" *ngIf="_editable">Prognostizieren</mat-checkbox>
             <div *ngIf="!_editable" class="no-bold">&nbsp;{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
-          </th>
+            <div *ngIf="ownOrder_slide">
+            <div [formGroup]="formGroup" *ngIf="_editable" >
+              <mat-form-field id='aramPQown'>
+                  <input matInput id="armaP" maxlength="3" formControlName="armaP" placeholder="p" type="number"/>
+                </mat-form-field>
+              <mat-form-field id='aramPQown'>
+                  <input matInput id="armaQ" maxlength="3" formControlName="armaQ" placeholder="q" type="number"/>
+              </mat-form-field>
+          </div>
+        </div>
+        </th>
           <td class="mat-cell" *ngFor="let element of formGroup.controls[ctrl].controls.timeSeries.controls; trackBy: trackByYearQuarter">
             <ng-container *ngIf="_timeSeriesMethodsService.checkVisibility(element.value, formGroup.controls[ctrl].controls.isHistoric.value, formGroup.controls.quarterly.value, this.formGroup.controls.base.value, end, accountingDataParams.get(ctrl).shiftDeterministic)">
               <span class="table-data" *ngIf="!_editable">{{element.value.amount}}</span>

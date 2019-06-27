@@ -123,16 +123,16 @@ this.ownOrder_slide = value;
       this.updateTable();
     });
   }
-
+  //Falls aufruf in Scenario-detail -> Daten für Intervall zuweisen
   calculateInterval(scenario: Scenario) {
-    const params = Array.from(this.accountingDataParams.keys());
+    const params = Array.from(this.accountingDataParams.keys()); //AccountingDataParams => hinterlegte Zeitdaten der Bspw. FreeCashFlow
     this.start = undefined;
     this.end = undefined;
     this.base = undefined;
     for (let i = 0; i < params.length; i++) {
-      const accountingFigure = scenario[params[i]];
+      const accountingFigure = scenario[params[i]]; //Zeitreihe der einzelnen Parameter
       if (accountingFigure && accountingFigure.timeSeries && accountingFigure.timeSeries.length > 0) {
-        if (!this.start && accountingFigure.isHistoric) {
+        if (!this.start && accountingFigure.isHistoric) { //Historic-true
           this.start = {
             year: accountingFigure.timeSeries[0].date.year,
             quarter: accountingFigure.timeSeries[0].date.quarter ? accountingFigure.timeSeries[0].date.quarter : 1,
@@ -142,9 +142,9 @@ this.ownOrder_slide = value;
             quarter: accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1].date.quarter ?
               accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1].date.quarter : 1,
           };
-        } else if (!this.end && !accountingFigure.isHistoric) {
-          const shiftDeterministic = this.accountingDataParams.get(params[i]).shiftDeterministic;
-          let dataPoint = accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1];
+        } else if (!this.end && !accountingFigure.isHistoric) { //Historic-false
+          const shiftDeterministic = this.accountingDataParams.get(params[i]).shiftDeterministic;//shiftDeterministic(true or undefined) gibt an, ob man sich im Parameter 'liabilities' befindet
+          let dataPoint = accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1]; //Endyear abrufen
           let year = dataPoint.date.year +
             ((shiftDeterministic && (!dataPoint.date.quarter || dataPoint.date.quarter === 4)) ? 1 : 0);
           let quarter = !dataPoint.date.quarter ? 4 : (shiftDeterministic && dataPoint.date.quarter === 4) ? 1 :
@@ -153,7 +153,7 @@ this.ownOrder_slide = value;
             year: year,
             quarter: quarter,
           };
-          dataPoint = accountingFigure.timeSeries[0];
+          dataPoint = accountingFigure.timeSeries[0]; //Startyear abrufen
           year = dataPoint.date.year +
             ((!shiftDeterministic && (!dataPoint.date.quarter || dataPoint.date.quarter === 1)) ? -1 : 0);
           quarter = !dataPoint.date.quarter ? 1 : (!shiftDeterministic && dataPoint.date.quarter === 1) ? 4 :
@@ -251,7 +251,7 @@ this.ownOrder_slide = value;
       (<FormGroup>this.formGroup.controls[param]).setControl('timeSeries', this._formBuilder.array(newTimeSeries));
     }
   }
-
+  
   createFinancialData(timeSeries: FormArray, year: number, quarter?: number, index?: number) {
     let group;
     if (quarter) {
@@ -272,7 +272,7 @@ this.ownOrder_slide = value;
       timeSeries.push(group);
     }
   }
-
+  //Spalten hinzufügen in der Zahlungsreihe
   fillTimeSeriesGaps(timeSeries, start, end, insertAtStart = false, shiftByOne = false) {
     const quarterly = this.formGroup.value.quarterly;
     const startYear = start.year + (shiftByOne && (!quarterly || end.quarter === 4) ? 1 : 0);
