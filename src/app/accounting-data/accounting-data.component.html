@@ -92,12 +92,12 @@
             <mat-checkbox formControlName="isHistoric" *ngIf="_editable">Prognostizieren</mat-checkbox>
             <div *ngIf="!_editable" class="no-bold">&nbsp;{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
             <div *ngIf="ownOrder_slide">
-            <div [formGroup]="formGroup" *ngIf="_editable" >
-              <mat-form-field id='aramPQown'>
-                  <input matInput id="armaP" maxlength="3" formControlName="armaP" placeholder="p" type="number"/>
+            <div *ngIf="_editable" >
+              <mat-form-field id='aramPQown' >
+                  <input matInput formControlName="armaP" placeholder="p" type="number"/>
                 </mat-form-field>
               <mat-form-field id='aramPQown'>
-                  <input matInput id="armaQ" maxlength="3" formControlName="armaQ" placeholder="q" type="number"/>
+                  <input matInput formControlName="armaQ" placeholder="q" type="number"/>
               </mat-form-field>
           </div>
         </div>

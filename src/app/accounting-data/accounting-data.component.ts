@@ -8,6 +8,7 @@ import { TimeSeriesMethodsService } from '../service/time-series-methods.service
 import { HtmlParser } from '@angular/compiler';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatSlideToggle } from '@angular/material';
+import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
 @Component({
   selector: 'app-accounting-data',
@@ -34,13 +35,17 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   accountingDataParams = accountingDataParams;
   private scenarioSubscription: Subscription;
 
-  constructor(private _formBuilder: FormBuilder, private _timeSeriesMethodsService: TimeSeriesMethodsService) {
+  constructor(
+    private _formBuilder: FormBuilder, 
+    private _timeSeriesMethodsService: TimeSeriesMethodsService)
+     {
   }
 
   ngOnInit() {
     this.buildForm();
     if (this.initialData) {
-      this.scenarioSubscription = this.initialData.subscribe((scenario) => this.buildForm(scenario));
+      this.scenarioSubscription = this.initialData.subscribe((scenario) => 
+      this.buildForm(scenario));
     }
   }
 
@@ -80,7 +85,7 @@ this.ownOrder_slide = value;
       }
     }
   }
-
+  //Erzeugen der Forms um eingegebene Werte auslesen zu können
   buildForm(scenario?: Scenario) {
     if (scenario) {
       this.calculateInterval(scenario);
@@ -89,6 +94,7 @@ this.ownOrder_slide = value;
       this.start = { year: this.base.year - 1, quarter: 1 };
       this.end = { year: this.base.year + 2, quarter: 1 };
     }
+    //Zeitreihen Form
     const newFormGroup = this._formBuilder.group({
       start: this._formBuilder.group({ year: [this.start.year, Validators.required], quarter: [this.start.quarter, Validators.required] }),
       end: this._formBuilder.group({ year: [this.end.year, Validators.required], quarter: [this.end.quarter, Validators.required] }),
@@ -98,8 +104,6 @@ this.ownOrder_slide = value;
       quarterly: [(scenario && scenario.liabilities.timeSeries[0] && scenario.liabilities.timeSeries[0].date.quarter) || false,
       Validators.required],
       ownOrder: [],
-      armaP:[],
-      armaQ: [],
       usedModel: [],
     }, {
         validator: (formGroup: FormGroup) => {
@@ -132,7 +136,7 @@ this.ownOrder_slide = value;
     for (let i = 0; i < params.length; i++) {
       const accountingFigure = scenario[params[i]]; //Zeitreihe der einzelnen Parameter
       if (accountingFigure && accountingFigure.timeSeries && accountingFigure.timeSeries.length > 0) {
-        if (!this.start && accountingFigure.isHistoric) { //Historic-true
+        if (!this.start && accountingFigure.isHistoric) { //Historic(prognostizieren)-true
           this.start = {
             year: accountingFigure.timeSeries[0].date.year,
             quarter: accountingFigure.timeSeries[0].date.quarter ? accountingFigure.timeSeries[0].date.quarter : 1,
@@ -142,7 +146,7 @@ this.ownOrder_slide = value;
             quarter: accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1].date.quarter ?
               accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1].date.quarter : 1,
           };
-        } else if (!this.end && !accountingFigure.isHistoric) { //Historic-false
+        } else if (!this.end && !accountingFigure.isHistoric) { //Historic(prognostizieren)-false
           const shiftDeterministic = this.accountingDataParams.get(params[i]).shiftDeterministic;//shiftDeterministic(true or undefined) gibt an, ob man sich im Parameter 'liabilities' befindet
           let dataPoint = accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1]; //Endyear abrufen
           let year = dataPoint.date.year +
@@ -183,6 +187,7 @@ this.ownOrder_slide = value;
   buildParamFormGroups(formGroup: FormGroup, scenario?: Scenario) {
     for (const param of this.accountingDataParams.keys()) {
       const timeSeries = [];
+      
       if (scenario && scenario[param] && scenario[param].timeSeries) {
         const items = scenario[param].timeSeries.filter(dataPoint => this._timeSeriesMethodsService.isInsideBounds(
           formGroup.controls.quarterly.value,
@@ -203,6 +208,8 @@ this.ownOrder_slide = value;
       formGroup.addControl(param, this._formBuilder.group({
         isHistoric: scenario && scenario[param] ? scenario[param].isHistoric : false,
         timeSeries: this._formBuilder.array(timeSeries),
+        armaP: 0,
+        armaQ: 0,
       }));
     }
   }
@@ -317,6 +324,7 @@ this.ownOrder_slide = value;
         this.fillTimeSeriesGaps(timeSeries, start, end);
         this.createFinancialData(timeSeries, end.year, this.formGroup.value.quarterly ? end.quarter : undefined);
       }
+
     }
   }
 
@@ -374,4 +382,6 @@ this.ownOrder_slide = value;
       subject.setValue(this._timeSeriesMethodsService.addPeriods({...limit.value}, -periodsBetween, this.formGroup.value.quarterly));
     }
   }
+
+  
 }

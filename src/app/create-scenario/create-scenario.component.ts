@@ -26,7 +26,8 @@ export class CreateScenarioComponent implements OnInit {
   environmentParams = environmentParams;
   Object = Object;
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
+    private _formBuilder: FormBuilder,
     private _scenariosService: ScenariosService,
     private _router: Router,
     private _alertService: AlertService,
@@ -108,6 +109,7 @@ export class CreateScenarioComponent implements OnInit {
           if (paramFormGroup.value.isHistoric && !scenario.stochastic) {
             scenario.stochastic = true;
           }
+          //Den jeweiligen Zeitreihen eingegebene Werte zuordnen
           scenario[paramName] = {
             isHistoric: paramFormGroup.value.isHistoric,
             timeSeries: this._timeSeriesMethodsService.convertToBackendFormat(
@@ -116,9 +118,11 @@ export class CreateScenarioComponent implements OnInit {
                 && this._timeSeriesMethodsService.checkVisibility(dataPoint, paramFormGroup.value.isHistoric, quarterly, base, end,
                   paramDefinition.shiftDeterministic))
             ),
-            order: order,
+            
+            order: [paramFormGroup.value.armaP,0,paramFormGroup.value.armaQ],
             seasonalOrder: seasonalOrder,
           };
+          
         }
       }
       this._scenariosService.addScenario(scenario)
