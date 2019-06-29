@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { debounceTime, map, first } from 'rxjs/operators';
-import { Scenario } from '../api/scenario';
+import { Scenario, DataPoint } from '../api/scenario';
 import { Observable, Subscription, identity } from 'rxjs';
 import { accountingDataParams } from '../api/paramData';
 import { TimeSeriesMethodsService } from '../service/time-series-methods.service';
@@ -34,6 +34,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   usedModel = "arma";
   accountingDataParams = accountingDataParams;
   private scenarioSubscription: Subscription;
+  scenario : Scenario;
 
   constructor(
     private _formBuilder: FormBuilder, 
@@ -42,11 +43,16 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.buildForm();
+    
     if (this.initialData) {
-      this.scenarioSubscription = this.initialData.subscribe((scenario) => 
-      this.buildForm(scenario));
+      this.initialData.subscribe((scenario) => 
+      this.scenario = scenario);
+      this.buildForm(this.scenario);
+    } else {
+      this.buildForm();
+      
     }
+    
   }
 
   ngOnDestroy() {
@@ -80,10 +86,10 @@ this.ownOrder_slide = value;
   @Input() set editable(value: Boolean) {
     if (this._editable !== value) {
       this._editable = value;
-      if (this.initialData) {
-        this.initialData.pipe(first()).subscribe((scenario) => this.buildForm(scenario));
-      }
+      this.buildForm(this.scenario);
+      
     }
+    
   }
   //Erzeugen der Forms um eingegebene Werte auslesen zu können
   buildForm(scenario?: Scenario) {
@@ -149,14 +155,18 @@ this.ownOrder_slide = value;
         } else if (!this.end && !accountingFigure.isHistoric) { //Historic(prognostizieren)-false
           const shiftDeterministic = this.accountingDataParams.get(params[i]).shiftDeterministic;//shiftDeterministic(true or undefined) gibt an, ob man sich im Parameter 'liabilities' befindet
           let dataPoint = accountingFigure.timeSeries[accountingFigure.timeSeries.length - 1]; //Endyear abrufen
+          
           let year = dataPoint.date.year +
             ((shiftDeterministic && (!dataPoint.date.quarter || dataPoint.date.quarter === 4)) ? 1 : 0);
-          let quarter = !dataPoint.date.quarter ? 4 : (shiftDeterministic && dataPoint.date.quarter === 4) ? 1 :
-            dataPoint.date.quarter + (shiftDeterministic) ? 1 : 0;
-          this.end = {
+          let quarter = this.calcQuarter(dataPoint,shiftDeterministic);
+          /*((!dataPoint.date.quarter) ? 4 : ((shiftDeterministic && dataPoint.date.quarter === 4) ? 1 :
+            (dataPoint.date.quarter + (shiftDeterministic) ? 1 : 0)));*/
+          
+            this.end = {
             year: year,
             quarter: quarter,
           };
+         
           dataPoint = accountingFigure.timeSeries[0]; //Startyear abrufen
           year = dataPoint.date.year +
             ((!shiftDeterministic && (!dataPoint.date.quarter || dataPoint.date.quarter === 1)) ? -1 : 0);
@@ -208,8 +218,8 @@ this.ownOrder_slide = value;
       formGroup.addControl(param, this._formBuilder.group({
         isHistoric: scenario && scenario[param] ? scenario[param].isHistoric : false,
         timeSeries: this._formBuilder.array(timeSeries),
-        armaP: 0,
-        armaQ: 0,
+        armaP: scenario && scenario[param] ? scenario[param].order[0] : 0,
+        armaQ: scenario && scenario[param] ? scenario[param].order[2] : 0,
       }));
     }
   }
@@ -380,6 +390,20 @@ this.ownOrder_slide = value;
   checkMaxIntegrity(limit, subject, periodsBetween = 1) {
     if (this._timeSeriesMethodsService.calculatePeriod(subject.value, limit.value, this.formGroup.value.quarterly) < periodsBetween) {
       subject.setValue(this._timeSeriesMethodsService.addPeriods({...limit.value}, -periodsBetween, this.formGroup.value.quarterly));
+    }
+  }
+
+  calcQuarter(dataPoint:DataPoint,shiftDeterministic: Boolean){
+    /*((!dataPoint.date.quarter) ? 4 : ((shiftDeterministic && dataPoint.date.quarter === 4) ? 1 :
+            (dataPoint.date.quarter + (shiftDeterministic) ? 1 : 0)));*/
+    if (!dataPoint.date.quarter) {
+      return 4;
+    } else if (shiftDeterministic && dataPoint.date.quarter === 4) {
+      return 1;
+    } else if (shiftDeterministic) {
+      return dataPoint.date.quarter + 1;
+    } else {
+      return dataPoint.date.quarter;
     }
   }
 
