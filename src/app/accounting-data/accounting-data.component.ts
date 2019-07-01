@@ -36,7 +36,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   accountingDataParams = accountingDataParams;
   private scenarioSubscription: Subscription;
   scenario : Scenario;
-  brownRozeff: Boolean;
+  
 
   constructor(
     private _formBuilder: FormBuilder, 
@@ -84,14 +84,14 @@ if(value === "arma"){
   this.quarter_slide_disabled = false;
   this.quarter_slide = false;
   this.brown = false;
-  this.brownRozeff = false;
+  
 
 } else if(value === "brown") {
 
   this.quarter_slide_disabled = true;
   this.quarter_slide = true;
   this.brown = true
-  this.brownRozeff = true;  
+   
   this.ownOrder = false;
   
 }
