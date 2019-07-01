@@ -53,6 +53,7 @@ export const DEFAULT_MOCK_DATA: Scenario[] = [{
         scenarioDescription: 'KPMG-geprüfte, garantiert fehlerfreie Unternehmensbewertung',
         scenarioColor: 'red',
         businessTaxRate: .25,
+        brownRozeff: false,
         corporateTaxRate: .2,
         solidaryTaxRate: .055,
         equityInterestRate: .4,
