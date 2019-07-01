@@ -121,6 +121,7 @@ export class CreateScenarioComponent implements OnInit {
             
             order: [paramFormGroup.value.armaP,0,paramFormGroup.value.armaQ],
             seasonalOrder: seasonalOrder,
+            score: null,
           };
           
         }
