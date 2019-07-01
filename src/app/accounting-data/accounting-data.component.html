@@ -10,7 +10,7 @@
   <mat-slide-toggle id="FCF_slide" formControlName="calculateFcf" [(ngModel)]="fcf_slide">Free Cashflow-Werte aus GuV-Werten berechnen</mat-slide-toggle>
 </div>
 <div [formGroup]="formGroup" *ngIf="_editable">
-  <mat-slide-toggle id="quarter_slide" formControlName="quarterly" [attr.disabled]="quarter_slide_disabled" [(ngModel)]="quarter_slide">Quartalsweise</mat-slide-toggle>
+  <mat-slide-toggle id="quarter_slide" formControlName="quarterly" [disabled]="quarter_slide_disabled" [(ngModel)]="quarter_slide">Quartalsweise</mat-slide-toggle>
 </div>
 <div *ngIf="ownOrder">
 <div [formGroup]="formGroup" *ngIf="_editable">
@@ -89,7 +89,7 @@
         <tr class="mat-row" *ngIf="[undefined, formGroup.value.calculateFcf].includes(accountingDataParams.get(ctrl).showOnCalculation)">
           <th class="mat-header-cell" [formGroup]="formGroup.controls[ctrl]">
             {{accountingDataParams.get(ctrl).displayName}}
-            <mat-checkbox formControlName="isHistoric" *ngIf="_editable">Prognostizieren</mat-checkbox>
+            <mat-checkbox formControlName="isHistoric" *ngIf="_editable" [(ngModel)]="brown" [disabled]="brown">Prognostizieren</mat-checkbox>
             <div *ngIf="!_editable" class="no-bold">&nbsp;{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
             <div *ngIf="ownOrder_slide">
             <div *ngIf="_editable" >

@@ -31,6 +31,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
   quarter_slide = false;
   ownOrder_slide = false;
   ownOrder = true;
+  brown = false;
   usedModel = "arma";
   accountingDataParams = accountingDataParams;
   private scenarioSubscription: Subscription;
@@ -47,6 +48,12 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
     if (this.initialData) {
       this.initialData.subscribe((scenario) => 
       this.scenario = scenario);
+      if (this.scenario.liabilities.timeSeries[0].date.quarter) {
+        this.quarter_slide = true
+      }
+      if (this.scenario.liabilities.order[0] > 0) {
+        this.ownOrder_slide = true;
+      }
       this.buildForm(this.scenario);
     } else {
       this.buildForm();
@@ -67,11 +74,14 @@ if(value === "arma"){
   
   this.ownOrder = true;
   this.quarter_slide_disabled = false;
+  this.quarter_slide = false;
+  this.brown = false;
 
 } else if(value === "brown") {
 
   this.quarter_slide_disabled = true;
   this.quarter_slide = true;
+  this.brown = true
   
 this.ownOrder = false;
   
@@ -87,7 +97,7 @@ this.ownOrder_slide = value;
     if (this._editable !== value) {
       this._editable = value;
       this.buildForm(this.scenario);
-      
+      console.log(this.scenario);
     }
     
   }
@@ -233,6 +243,9 @@ this.ownOrder_slide = value;
   }
 
   quarterlyChanged() {
+    if (this.scenario) {
+      return;
+    }
     const quarterly = this.formGroup.controls.quarterly.value;
     for (const param of this.accountingDataParams.keys()) {
       const newTimeSeries = [];
