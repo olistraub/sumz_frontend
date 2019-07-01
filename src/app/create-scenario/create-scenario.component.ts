@@ -76,6 +76,9 @@ export class CreateScenarioComponent implements OnInit {
       if (usedModel == "brown"){
         this.brownRozeff = true;
       }
+      if (usedModel == "arma"){
+        this.brownRozeff = false;
+      }
       
         /*if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
           p = this.formGroup3.controls.armaP.value;
