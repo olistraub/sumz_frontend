@@ -4,6 +4,7 @@ export class Scenario {
     scenarioDescription: string;
     periods: number;
     scenarioColor: string;
+    brownRozeff: boolean;
 
     equityInterestRate: number;
     interestOnLiabilitiesRate: number;

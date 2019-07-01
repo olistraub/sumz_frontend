@@ -25,6 +25,7 @@ export class CreateScenarioComponent implements OnInit {
   accountingDataParams = accountingDataParams; // fix scope issues in view
   environmentParams = environmentParams;
   Object = Object;
+  brownRozeff = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -64,15 +65,18 @@ export class CreateScenarioComponent implements OnInit {
 
       let order: number[];
       let seasonalOrder: number[];
-      let p = 0;
-      let q = 0;
+      //let p = 0;
+      //let q = 0;
       let usedModel = this.formGroup3.controls.usedModel.value;
 
       if (usedModel === null){
         usedModel = "arma";
       }
+      if (usedModel == "brown"){
+        this.brownRozeff = true;
+      }
       
-        if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
+        /*if (this.formGroup3.controls.armaP.value !== null && this.formGroup3.controls.armaQ.value !== null){
           p = this.formGroup3.controls.armaP.value;
           q = this.formGroup3.controls.armaQ.value;
         }
@@ -89,7 +93,7 @@ export class CreateScenarioComponent implements OnInit {
         }else if(usedModel === "brown"){
           order = [1,0,0];
           seasonalOrder = [0,1,1,4];
-        }
+        }*/
       
       this.busy = true;
       const scenario: Scenario = {
@@ -99,6 +103,7 @@ export class CreateScenarioComponent implements OnInit {
         stochastic: false,
         periods: this._timeSeriesMethodsService.calculatePeriod(base, end, quarterly),
         scenarioColor: this.color,
+        brownRozeff: this.brownRozeff,
       };
       
       Object.keys(this.formGroup2.controls).forEach(param => scenario[param] = scenario[param] / 100);
@@ -119,8 +124,8 @@ export class CreateScenarioComponent implements OnInit {
                   paramDefinition.shiftDeterministic))
             ),
             
-            order: [paramFormGroup.value.armaP,0,paramFormGroup.value.armaQ],
-            seasonalOrder: seasonalOrder,
+            order: (this.formGroup3.value.ownOrder) ? [paramFormGroup.value.armaP,0,paramFormGroup.value.armaQ] : (usedModel == "brown") ? [1,0,0] : null,
+            seasonalOrder: (usedModel == "brown") ? [0,1,1,4] : (this.formGroup3.value.quarterly) ? [0,0,0,4] : [0,0,0,1],
             score: null,
           };
           
