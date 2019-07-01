@@ -1,8 +1,8 @@
 <div [formGroup]="formGroup" *ngIf="_editable">
 <mat-button-toggle-group id="model_toggle" #group="matButtonToggleGroup" formControlName="usedModel">
-  <mat-button-toggle id="arma" value="arma" checked="true" (change)="onModelChanged($event.value)">ARMA-Modell
+  <mat-button-toggle id="arma" value="arma" [checked]="!brown" (change)="onModelChanged($event.value)">ARMA-Modell
     </mat-button-toggle>
-  <mat-button-toggle id="brown" value="brown" (change)="onModelChanged($event.value)">Brown-Rozeff-Modell
+  <mat-button-toggle id="brown" [checked]="brown" value="brown"  (change)="onModelChanged($event.value)">Brown-Rozeff-Modell
     </mat-button-toggle>
 </mat-button-toggle-group>
 </div>
