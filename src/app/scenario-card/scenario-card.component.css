@@ -15,19 +15,9 @@ mat-card-title {
     background-color: red;
 }
 
-.green{
-    background-color: green;
-    color: white;
-}
-
 .black{
     background-color: black;
     color: white;
-}
-
-.white{
-    background-color: white;
-    
 }
 
 .blue{
@@ -37,4 +27,31 @@ mat-card-title {
 
 .yellow{
     background-color: yellow;
+}
+
+.white{
+    background-color: white;
+}
+
+.green{
+    background-color: #2E7D32;
+    color: white;
+}
+
+.brightgreen{
+    background-color: #36C93E;
+}
+
+.purple{
+    background-color: #52418A;
+    color: white;
+}
+
+.brown{
+    background-color: #4A2D14;
+    color: white;
+}
+
+.orange{
+    background-color: #C98040;
 }

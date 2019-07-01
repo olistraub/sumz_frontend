@@ -120,16 +120,8 @@ mat-progress-bar {
   background-color: red;
 }
 
-#green{
-  background-color: green;
-}
-
 #black{
   background-color: black;
-}
-
-#white{
-  background-color: white;
 }
 
 #blue{
@@ -138,6 +130,30 @@ mat-progress-bar {
 
 #yellow{
   background-color: yellow;
+}
+
+#white{
+  background-color: white;
+}
+
+#green{
+  background-color: #2E7D32;
+}
+
+#brightgreen{
+  background-color: #36C93E;
+}
+
+#purple{
+  background-color: #52418A;
+}
+
+#brown{
+  background-color: #4A2D14;
+}
+
+#orange{
+  background-color: #C98040;
 }
 
 .mat-button-toggle{
