@@ -54,6 +54,9 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
       if (this.scenario.liabilities.order[0] > 0) {
         this.ownOrder_slide = true;
       }
+      if (this.scenario.revenue) {
+        this.fcf_slide = true;
+      }
       this.buildForm(this.scenario);
     } else {
       this.buildForm();
