@@ -89,9 +89,9 @@
         <tr class="mat-row" *ngIf="[undefined, formGroup.value.calculateFcf].includes(accountingDataParams.get(ctrl).showOnCalculation)">
           <th class="mat-header-cell" [formGroup]="formGroup.controls[ctrl]">
             {{accountingDataParams.get(ctrl).displayName}}
-            <mat-checkbox formControlName="isHistoric" *ngIf="_editable" [(ngModel)]="brown" [disabled]="brown">Prognostizieren</mat-checkbox>
+            <mat-checkbox formControlName="isHistoric" *ngIf="_editable" [disabled]="brown && !accountingDataParams.get(ctrl).shiftDeterministic">Prognostizieren</mat-checkbox>
             <div *ngIf="!_editable" class="no-bold">&nbsp;{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
-            <div *ngIf="ownOrder_slide">
+            <div *ngIf="ownOrder_slide && formGroup.controls[ctrl].value.isHistoric">
             <div *ngIf="_editable" >
               <mat-form-field id='aramPQown' >
                   <input matInput formControlName="armaP" placeholder="p" type="number"/>
@@ -102,7 +102,7 @@
               
           </div>
         </div>
-        <div *ngIf="!_editable">p:</div>
+        <div *ngIf="!_editable">p: {{formGroup.controls[ctrl].value.armaP}}, q: {{formGroup.controls[ctrl].value.armaQ}}, score: {{formGroup.controls[ctrl].value.score}}</div>
         </th>
           <td class="mat-cell" *ngFor="let element of formGroup.controls[ctrl].controls.timeSeries.controls; trackBy: trackByYearQuarter">
             <ng-container *ngIf="_timeSeriesMethodsService.checkVisibility(element.value, formGroup.controls[ctrl].controls.isHistoric.value, formGroup.controls.quarterly.value, this.formGroup.controls.base.value, end, accountingDataParams.get(ctrl).shiftDeterministic)">

@@ -49,6 +49,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
     if (this.initialData) {
       this.initialData.subscribe((scenario) => 
       this.scenario = scenario);
+      console.log(this.scenario);
       if (this.scenario && this.scenario.liabilities.timeSeries[0] && this.scenario.liabilities.timeSeries[0].date.quarter) {
         this.quarter_slide = true
       }
@@ -89,10 +90,11 @@ if(value === "arma"){
 
   this.quarter_slide_disabled = true;
   this.quarter_slide = true;
-  this.brown = true
-   
+  this.brown = true;
+  
   this.ownOrder = false;
   this.ownOrder_slide = false;
+  
   
 }
 
@@ -235,11 +237,13 @@ this.ownOrder_slide = value;
         }
       }
       formGroup.addControl(param, this._formBuilder.group({
-        isHistoric: scenario && scenario[param] ? scenario[param].isHistoric : false,
+        isHistoric: (scenario && scenario[param]) ? scenario[param].isHistoric : (this.usedModel == "brown") ? true : false,
         timeSeries: this._formBuilder.array(timeSeries),
         armaP: scenario && scenario[param] ? scenario[param].order[0] : 0,
         armaQ: scenario && scenario[param] ? scenario[param].order[2] : 0,
+        score: scenario && scenario[param] ? scenario[param].score : "",
       }));
+      
     }
   }
 
