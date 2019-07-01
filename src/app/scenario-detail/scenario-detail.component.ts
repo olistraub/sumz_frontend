@@ -236,6 +236,7 @@ export class ScenarioDetailComponent implements OnInit {
 
   saveScenario() {
     this.forScenario$.pipe(first()).subscribe(currentScenario => {
+      console.log(currentScenario);
       currentScenario.scenarioColor = this.color;
       currentScenario.scenarioName = this.formGroup.controls.scenarioName.value;
       currentScenario.scenarioDescription = this.formGroup.controls.scenarioDescription.value;
@@ -259,8 +260,9 @@ export class ScenarioDetailComponent implements OnInit {
         usedModel = "arma";
       }
       
-          if (this.accountingDataFormGroup.controls.armaP.value !== null && this.accountingDataFormGroup.controls.armaQ.value !== null){
+          /*if (this.accountingDataFormGroup.controls.armaP.value !== null && this.accountingDataFormGroup.controls.armaQ.value !== null){
           p = this.accountingDataFormGroup.controls.armaP.value;
+          
           q = this.accountingDataFormGroup.controls.armaQ.value;
         }
 
@@ -276,7 +278,7 @@ export class ScenarioDetailComponent implements OnInit {
         }else if(usedModel === "brown"){
           order = [1,0,0];
           seasonalOrder = [0,1,1,4];
-        }
+        }*/
 
       for (const [param, paramDefinition] of this.accountingDataParams) {
         if (this._timeSeriesMethodsService.shouldDisplayAccountingDataParam(
@@ -298,7 +300,7 @@ export class ScenarioDetailComponent implements OnInit {
                   end,
                   paramDefinition.shiftDeterministic))
             ),
-            order: order,
+            order: [paramFormGroup.value.armaP,0,paramFormGroup.value.armaQ],
             seasonalOrder: seasonalOrder,
           };
         }
@@ -351,6 +353,7 @@ export class ScenarioDetailComponent implements OnInit {
         if (this.formGroup.valid && this.accountingDataFormGroup.valid) {
           this.saveConfig();
           this.saveScenario();
+
         } else {
           this._alertService.error('Speichern des Szenarios nicht möglich. Es sind noch Fehler vorhanden');
         }

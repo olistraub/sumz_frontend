@@ -51,8 +51,11 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
       if (this.scenario.liabilities.timeSeries[0].date.quarter) {
         this.quarter_slide = true
       }
+      console.log(this.scenario);
+        console.log(this.scenario.liabilities.order[0]);
       if (this.scenario.liabilities.order[0] > 0) {
         this.ownOrder_slide = true;
+        
       }
       if (this.scenario.revenue) {
         this.fcf_slide = true;
@@ -99,8 +102,8 @@ this.ownOrder_slide = value;
   @Input() set editable(value: Boolean) {
     if (this._editable !== value) {
       this._editable = value;
-      this.buildForm(this.scenario);
-      console.log(this.scenario);
+      //this.buildForm(this.scenario);
+      this.ngOnInit();
     }
     
   }
@@ -410,8 +413,7 @@ this.ownOrder_slide = value;
   }
 
   calcQuarter(dataPoint:DataPoint,shiftDeterministic: Boolean){
-    /*((!dataPoint.date.quarter) ? 4 : ((shiftDeterministic && dataPoint.date.quarter === 4) ? 1 :
-            (dataPoint.date.quarter + (shiftDeterministic) ? 1 : 0)));*/
+   
     if (!dataPoint.date.quarter) {
       return 4;
     } else if (shiftDeterministic && dataPoint.date.quarter === 4) {
