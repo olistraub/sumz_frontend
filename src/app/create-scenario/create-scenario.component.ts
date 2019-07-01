@@ -25,7 +25,7 @@ export class CreateScenarioComponent implements OnInit {
   accountingDataParams = accountingDataParams; // fix scope issues in view
   environmentParams = environmentParams;
   Object = Object;
-  brownRozeff = false;
+  brownRozeff: boolean;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -37,6 +37,7 @@ export class CreateScenarioComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.brownRozeff = false;
     this.busy = false;
     this.color = "red";
     this.formGroup1 = this._formBuilder.group({

@@ -49,18 +49,16 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
     if (this.initialData) {
       this.initialData.subscribe((scenario) => 
       this.scenario = scenario);
-      if (this.scenario.liabilities.timeSeries[0].date.quarter) {
+      if (this.scenario && this.scenario.liabilities.timeSeries[0] && this.scenario.liabilities.timeSeries[0].date.quarter) {
         this.quarter_slide = true
       }
-      console.log(this.scenario);
-        console.log(this.scenario.liabilities.order[0]);
-      if (this.scenario.liabilities.order[0] > 0) {
+      /*if (this.scenario.liabilities.order[0] > 0) {
         this.ownOrder_slide = true;
         
-      }
-      if (this.scenario.revenue) {
+      }*/
+      /*if (this.scenario.revenue) {
         this.fcf_slide = true;
-      }
+      }*/
       this.buildForm(this.scenario);
     } else {
       this.buildForm();
@@ -85,6 +83,7 @@ if(value === "arma"){
   this.quarter_slide = false;
   this.brown = false;
   
+  
 
 } else if(value === "brown") {
 
@@ -93,6 +92,7 @@ if(value === "arma"){
   this.brown = true
    
   this.ownOrder = false;
+  this.ownOrder_slide = false;
   
 }
 
@@ -105,8 +105,8 @@ this.ownOrder_slide = value;
   @Input() set editable(value: Boolean) {
     if (this._editable !== value) {
       this._editable = value;
-      //this.buildForm(this.scenario);
-      this.ngOnInit();
+      this.buildForm(this.scenario);
+      
     }
     
   }
