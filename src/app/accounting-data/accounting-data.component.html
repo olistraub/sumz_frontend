@@ -94,15 +94,15 @@
             <div *ngIf="ownOrder_slide && formGroup.controls[ctrl].value.isHistoric">
             <div *ngIf="_editable" >
               <mat-form-field id='aramPQown' >
-                  <input matInput formControlName="armaP" placeholder="p" type="number"/>
+                  <input matInput min ="0" formControlName="armaP" placeholder="p" type="number"/>
                 </mat-form-field>
               <mat-form-field id='aramPQown'>
-                  <input matInput formControlName="armaQ" placeholder="q" type="number"/>
+                  <input matInput min="0" formControlName="armaQ" placeholder="q" type="number"/>
               </mat-form-field>
               
           </div>
         </div>
-        <div *ngIf="!_editable">p: {{formGroup.controls[ctrl].value.armaP}}, q: {{formGroup.controls[ctrl].value.armaQ}}, score: {{formGroup.controls[ctrl].value.score}}</div>
+        <div *ngIf="!_editable" && element.value, formGroup.controls[ctrl].controls.isHistoric.value>p: {{formGroup.controls[ctrl].value.armaP}}, q: {{formGroup.controls[ctrl].value.armaQ}}, score: {{formGroup.controls[ctrl].value.score}}</div>
         </th>
           <td class="mat-cell" *ngFor="let element of formGroup.controls[ctrl].controls.timeSeries.controls; trackBy: trackByYearQuarter">
             <ng-container *ngIf="_timeSeriesMethodsService.checkVisibility(element.value, formGroup.controls[ctrl].controls.isHistoric.value, formGroup.controls.quarterly.value, this.formGroup.controls.base.value, end, accountingDataParams.get(ctrl).shiftDeterministic)">
