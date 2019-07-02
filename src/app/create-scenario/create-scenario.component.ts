@@ -39,7 +39,7 @@ export class CreateScenarioComponent implements OnInit {
   ngOnInit() {
     this.brownRozeff = false;
     this.busy = false;
-    this.color = "red";
+    this.color = "brightgreen";
     this.formGroup1 = this._formBuilder.group({
       scenarioName: ['', Validators.required],
       scenarioDescription: ['', Validators.required],
@@ -130,7 +130,7 @@ export class CreateScenarioComponent implements OnInit {
             
             order: (this.formGroup3.value.ownOrder && paramFormGroup.value.isHistoric) ? [paramFormGroup.value.armaP,0,paramFormGroup.value.armaQ] : (usedModel == "brown") ? [1,0,0] : null,
             seasonalOrder: (usedModel == "brown") ? [0,1,1,4] : (this.formGroup3.value.quarterly) ? [0,0,0,4] : [0,0,0,1],
-            score: null,
+
           };
           
         }

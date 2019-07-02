@@ -24,7 +24,7 @@ const taxRateValidators =
 
 export const environmentParams = {
     equityInterestRate: { displayName: 'Eigenkapitalzinsen', id: 'eigenkapitalzinsen', validators: [Validators.required, numberValidator] },
-    interestOnLiabilitiesRate: { displayName: 'Zinssatz für Verbindlichkeiten', id: 'verbzinsen', validators: [Validators.required, numberValidator] },
+    interestOnLiabilitiesRate: { displayName: 'Zinssatz für Verbindlichkeiten', id: 'verbzinsen', validators: [Validators.required, numberValidator, ...taxRateValidators] },
     businessTaxRate: { displayName: 'Gewerbesteuersatz', id: 'gewerbesteuersatz', validators: [Validators.required, ...taxRateValidators] },
     corporateTaxRate: { displayName: 'Körperschaftssteuersatz', id: 'koerperschaftssteuersatz', validators: [Validators.required, ...taxRateValidators] },
     solidaryTaxRate: { displayName: 'Solidaritätszuschlag', id: 'soli', validators: [Validators.required, ...taxRateValidators] },
