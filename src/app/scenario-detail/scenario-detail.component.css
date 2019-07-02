@@ -140,6 +140,22 @@ mat-progress-bar {
   background-color: yellow;
 }
 
+#brightgreen{
+  background-color: #36C93E;
+}
+
+#purple{
+  background-color: #52418A;
+}
+
+#brown{
+  background-color: #4A2D14;
+}
+
+#orange{
+  background-color: #C98040;
+}
+
 .mat-button-toggle{
 
   border: 0.3em solid white;

@@ -39,7 +39,7 @@ export class CreateScenarioComponent implements OnInit {
   ngOnInit() {
     this.brownRozeff = false;
     this.busy = false;
-    this.color = "brightgreen";
+    this.color = "red";
     this.formGroup1 = this._formBuilder.group({
       scenarioName: ['', Validators.required],
       scenarioDescription: ['', Validators.required],
