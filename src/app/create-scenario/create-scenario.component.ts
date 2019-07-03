@@ -73,10 +73,10 @@ export class CreateScenarioComponent implements OnInit {
       if (usedModel === null){
         usedModel = "arma";
       }
-      if (usedModel == "brown"){
+      if (usedModel === "brown"){
         this.brownRozeff = true;
       }
-      if (usedModel == "arma"){
+      if (usedModel === "arma"){
         this.brownRozeff = false;
       }
       

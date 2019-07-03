@@ -56,6 +56,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
       
       if (this.scenario && this.scenario.brownRozeff) {
         this.brown = true;
+        this.ownOrder = false;
       }
       this.buildForm(this.scenario);
     } else {
@@ -133,7 +134,7 @@ this.ownOrder_slide = value;
       quarterly: [(scenario && scenario.liabilities.timeSeries[0] && scenario.liabilities.timeSeries[0].date.quarter) || false,
       Validators.required],
       ownOrder: [],
-      usedModel: [],
+      usedModel: [this.usedModel],
     }, {
         validator: (formGroup: FormGroup) => {
           return this.validateForm(formGroup);
