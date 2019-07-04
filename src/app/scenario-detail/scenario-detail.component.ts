@@ -98,13 +98,14 @@ export class ScenarioDetailComponent implements OnInit {
 
   private forScenarioId$: Observable<number>;
 
-  constructor(private _scenariosService: ScenariosService,
+  constructor(
+    private _scenariosService: ScenariosService,
     private _formBuilder: FormBuilder,
     private _optionsService: OptionsService,
     private _alertService: AlertService,
     private _route: ActivatedRoute,
-	private _router: Router,
-	private _dialog: MatDialog,
+  	private _router: Router,
+	  private _dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private _timeSeriesMethodsService: TimeSeriesMethodsService) { }
 

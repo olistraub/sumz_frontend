@@ -53,12 +53,17 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
       if (this.scenario && this.scenario.liabilities.timeSeries[0] && this.scenario.liabilities.timeSeries[0].date.quarter) {
         this.quarter_slide = true
       }
+
+      if (this.scenario && this.scenario.revenue){
+        this.fcf_slide = true;
+      }
       
       if (this.scenario && this.scenario.brownRozeff) {
         this.brown = true;
         this.ownOrder = false;
       }
       this.buildForm(this.scenario);
+      console.log(this.scenario);
     } else {
       this.buildForm();
       
@@ -270,10 +275,12 @@ this.ownOrder_slide = value;
   }
 
   quarterlyChanged() {
-    if (this.scenario) {
+
+    if (this.scenario){
       return;
     }
-    const quarterly = this.formGroup.controls.quarterly.value;
+   
+    const quarterly = this.formGroup.controls.quarterly.value
     for (const param of this.accountingDataParams.keys()) {
       const newTimeSeries = [];
       const timeSeries = <FormArray>(<FormGroup>this.formGroup.controls[param]).controls.timeSeries;

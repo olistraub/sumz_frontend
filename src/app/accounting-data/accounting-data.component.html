@@ -102,7 +102,7 @@
               
           </div>
         </div>
-        <div *ngIf="!_editable" && element.value, formGroup.controls[ctrl].controls.isHistoric.value>p: {{formGroup.controls[ctrl].value.armaP}}, q: {{formGroup.controls[ctrl].value.armaQ}}, score: {{formGroup.controls[ctrl].value.score}}</div>
+        <div *ngIf="!_editable && formGroup.controls[ctrl].controls.isHistoric.value">p: {{formGroup.controls[ctrl].value.armaP}}, q: {{formGroup.controls[ctrl].value.armaQ}}, score: {{formGroup.controls[ctrl].value.score}}</div>
         </th>
           <td class="mat-cell" *ngFor="let element of formGroup.controls[ctrl].controls.timeSeries.controls; trackBy: trackByYearQuarter">
             <ng-container *ngIf="_timeSeriesMethodsService.checkVisibility(element.value, formGroup.controls[ctrl].controls.isHistoric.value, formGroup.controls.quarterly.value, this.formGroup.controls.base.value, end, accountingDataParams.get(ctrl).shiftDeterministic)">
