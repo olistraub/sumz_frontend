@@ -154,10 +154,16 @@ export class ScenarioDetailComponent implements OnInit {
         title: {
           text: '',
         },
+        tooltip: {
+          enabled: false,
+        },
         yAxis: {
           title: {
             text: 'Wahrscheinlichkeitsdichte',
           },
+          labels: {
+              enabled: false,
+            },
         },
         xAxis: {
           categories: (currentScenario.stochastic ? currentScenario.companyValueDistribution.xValues : []),
