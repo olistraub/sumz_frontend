@@ -22,14 +22,16 @@ export class ScenarioCardComponent implements OnInit {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   hovered: Boolean;
 
-  constructor(private _scenariosService: ScenariosService,
+  constructor(
+    private _scenariosService: ScenariosService,
     private _alertService: AlertService,
-	private _dialog: MatDialog,
-	private _router: Router,
+	  private _dialog: MatDialog,
+	  private _router: Router,
     private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
     this.hovered = false;
+    
   }
 
   toggleScenarioMenu(event: Event) {

@@ -57,6 +57,8 @@ export class ScenariosComponent implements OnInit {
   ngOnInit() {
     this.scenarios$ = this.scenariosService.getScenarios();
     //this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
+   //Zum löschen eines Scenario bei einem Schiefstand per ID (hier 1020)
+    //this.scenariosService.getScenario(1020).subscribe(current => this.scenariosService.removeScenario(current));
     this.breakpoint = this.calcResp(window.innerWidth)
   }
 

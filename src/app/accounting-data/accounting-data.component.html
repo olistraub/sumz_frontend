@@ -90,7 +90,7 @@
           <th class="mat-header-cell" [formGroup]="formGroup.controls[ctrl]">
             {{accountingDataParams.get(ctrl).displayName}}
             <mat-checkbox formControlName="isHistoric" *ngIf="_editable" [disabled]="brown && !accountingDataParams.get(ctrl).shiftDeterministic">Prognostizieren</mat-checkbox>
-            <div *ngIf="!_editable" class="no-bold">&nbsp;{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
+            <div *ngIf="!_editable" class="no-bold">{{formGroup.controls[ctrl].value.isHistoric ? 'Wird prognostiziert' : ''}}</div>
             <div *ngIf="ownOrder_slide && formGroup.controls[ctrl].value.isHistoric">
             <div *ngIf="_editable" >
               <mat-form-field id='aramPQown' >

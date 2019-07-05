@@ -92,7 +92,7 @@
           Cashflows
         </mat-panel-title>
         <mat-panel-description>
-          {{((forScenario$ | async)?.brownRozeffScore) ? (forScenario$ | async)?.brownRozeffScore : "Details für Cashflowberechnung"}}
+          {{((forScenario$ | async)?.brownRozeffScore) ? "BR-Score: " + (forScenario$ | async)?.brownRozeffScore : "Details für Cashflowberechnung"}}
           <mat-icon>euro_symbol</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>

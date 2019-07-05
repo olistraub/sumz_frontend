@@ -26,6 +26,7 @@
     position: relative;
     font-weight: normal;
     vertical-align: bottom;
+    
 }
 
 .bold {
@@ -102,6 +103,7 @@ mat-checkbox {
 
 .no-bold {
     font-weight: normal;
+    width: 150px;
 }
 
 .flex {

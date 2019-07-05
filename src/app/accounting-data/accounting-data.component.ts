@@ -51,7 +51,8 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
       this.scenario = scenario);
       console.log(this.scenario);
       if (this.scenario && this.scenario.liabilities.timeSeries[0] && this.scenario.liabilities.timeSeries[0].date.quarter) {
-        this.quarter_slide = true
+        this.quarter_slide = true;
+        this.quarter_slide_disabled = true;
       }
 
       if (this.scenario && this.scenario.revenue){
@@ -63,7 +64,7 @@ export class AccountingDataComponent implements OnInit, OnDestroy {
         this.ownOrder = false;
       }
       this.buildForm(this.scenario);
-      console.log(this.scenario);
+      
     } else {
       this.buildForm();
       
