@@ -1,19 +1,38 @@
 <div class="content-container">
-  <h1>Alle Szenarien</h1>
 
-  <input type="text" [formControl]="filter" placeholder="Nach Szenario suchen...">
+
+  <table style="width: 100%">
+    <tr>
+      <td>
+        <h1>Alle Szenarien</h1>
+      </td>
+      <td style="text-align: right">
+        <form>
+          <mat-form-field>
+            <input matInput type="text" [formControl]="filter" placeholder="Nach Szenarien suchen...">
+            <mat-icon matSuffix style="font-size: 18px">search</mat-icon>
+          </mat-form-field>
+        </form>
+      </td>
+    </tr>
+
+  </table>
+
+
   <div id="no-data-info" *ngIf="(scenarios$ | async)?.length === 0" [@noDataAnimation]>
     Es existieren aktuell keine Szenarien.
   </div>
-  <mat-grid-list [cols]="breakpoint" rowHeight="4:4" [@gridAnimation]="(scenarios$ | async)?.length" (window:resize)="onResize($event)">
+  <mat-grid-list [cols]="breakpoint" rowHeight="4:4" [@gridAnimation]="(scenarios$ | async)?.length"
+    (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let scenario of filteredScenarios$ | async">
       <app-scenario-card [scenario]="scenario" [routerLink]="['/scenario', scenario.id]"></app-scenario-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
 <div id="spinner" *ngIf="!(scenarios$ | async)" class="mat-elevation-z6" [@spinnerAnimation]>
-<mat-spinner diameter="36"></mat-spinner>
+  <mat-spinner diameter="36"></mat-spinner>
 </div>
-<a mat-fab color="accent" class="fab-bottom-right" matTooltip="Neues Szenario erstellen" matTooltipShowDelay="500" routerLink="create">
+<a mat-fab id="newSzenario" color="accent" class="fab-bottom-right" matTooltip="Neues Szenario erstellen" matTooltipShowDelay="500"
+  routerLink="create">
   <mat-icon aria-label="Neues Szenario erstellen">add</mat-icon>
 </a>
