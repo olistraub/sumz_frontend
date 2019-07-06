@@ -1,8 +1,10 @@
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
 import { Scenario } from '../api/scenario';
 import { ScenariosService } from '../service/scenarios.service';
+import { FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scenarios',
@@ -47,27 +49,33 @@ import { ScenariosService } from '../service/scenarios.service';
         ])),
       ]),
     ]),
-  ],
+  ]
 })
 export class ScenariosComponent implements OnInit {
   scenarios$: Observable<Scenario[]>;
+  filteredScenarios$: Observable<Scenario[]>;
+  filter: FormControl;
+  filter$: Observable<string>;
   breakpoint = 1;
+
   constructor(private scenariosService: ScenariosService) { }
 
   ngOnInit() {
     this.scenarios$ = this.scenariosService.getScenarios();
+    this.filter = new FormControl('');
+    this.filter$ = this.filter.valueChanges.pipe(startWith(''));
+    this.filteredScenarios$ = combineLatest(this.scenarios$, this.filter$).pipe(
+      map(([Scenario, filterString]) => Scenario.filter(scenario => scenario.scenarioName.indexOf(filterString) !== -1)));
     //this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
-   //Zum löschen eines Scenario bei einem Schiefstand per ID (hier 1020)
-    //this.scenariosService.getScenario(1020).subscribe(current => this.scenariosService.removeScenario(current));
-    this.breakpoint = this.calcResp(window.innerWidth)
+    this.breakpoint = this.calcResp(window.innerWidth);
   }
 
   onResize(event) {
     //this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 6;
-    this.breakpoint = this.calcResp(event.target.innerWidth)
+    this.breakpoint = this.calcResp(event.target.innerWidth);
   }
 
-  calcResp(width){
+  calcResp(width) {
 
     width = width - 60;
     var anz = width / 300;
@@ -75,6 +83,8 @@ export class ScenariosComponent implements OnInit {
     return Math.round(anz);
   }
 
-
+  onChange(newValue) {
+    console.log(newValue);
+  }
 
 }
